@@ -1,0 +1,120 @@
+380	Silver vein
+381	Obsidian
+382	Flametal ore
+383	Leviathan (chitin)
+384	Wild barley
+385	Wild flax
+386	None of your lines here.
+387	Lines erased: {0}. Ctrl+Z on the map — bring back.
+388	Only the host can erase all shared lines.
+389	Shared drawings erased ({0}). Ctrl+Z on the map — bring back.
+390	Nothing to undo.
+391	Shared drawings are not available now: the host has not sent them yet.
+392	Line removed (Ctrl+Y — bring back).
+393	Erased lines brought back: {0} (Ctrl+Y — erase again).
+394	Nothing to redo.
+395	Line brought back.
+396	Lines erased again: {0}.
+397	 (sells)
+398	{0} (from: {1})
+399	Found here
+400	Sells
+401	Creatures
+402	From creatures
+403	The Vegvisir points to
+404	Mark «{0}» placed for everyone with the mod.
+405	Mark «{0}» placed.
+406	Mark {0}
+407	Mark «{0}» removed.
+408	Mark «{0}» removed for everyone.
+409	from cache
+410	on the main thread
+411	in the background, threads: {0}
+412	Tamed animals
+413	Click a kind to see every animal. The host sees all animals of the world, a friend — those near them.
+414	All of them are on the map with the «Tamed animals» layer (large map → «Layers»).
+415	Looking…
+416	No tamed animals found.
+417	<color=#ffb040>hungry {0}</color>
+418	<color=#ff9ad0>pregnant {0}</color>
+419	… and {0} more, further from you.
+420	health {0:0}/{1:0}
+421	<color=#ff9ad0>pregnant</color>
+422	follows {0}
+423	Teleport
+424	<b>Total: {0}</b>
+425	Free camera
+426	<color=#c0c0c0>For nice screenshots: the character stays in place, the interface and the minimap hide, and the camera flies. Mouse — look, walk keys — move, jump and crouch — up and down, run — three times faster, wheel — speed. F11 — game screenshot (the screenshots folder in the saves). To come back — Esc (or the same key, if you assign one in «Settings» → «Keys» — «Free camera»).\nThis is the mod's own camera, not the console freefly, so achievements are not affected. The world loads around the character: far from it the terrain will be empty. While the camera flies, the character is defenceless — don't use it near enemies.</color>
+427	Speed: {0:0} m/s
+428	Turn off the free camera
+429	Turn on the free camera
+430	World map
+431	 World map: panel and icons on the large map (M) and on the minimap
+432	<color=#c0c0c0>Open the large map (M): on the right is the «World map» panel with the tabs «Layers» (what to show: places, resources of the whole world, animals), «Search», «Marks», «Drawings» and «Look». All map settings are there, on the map itself.\nPlaces are taken straight from the game, so they are exact for your world. Only the host knows the full list of places: a friend gets the icons if the host has Valheim Helper too. The mod only reads the world's data: it writes nothing into the save and sets no cheat flags.</color>
+433	Map actions
+434	 Teleport from the map: open the map, Ctrl + right click on a point
+435	Reveal the whole map (forever for this character)
+436	Map revealed.
+437	Assign a key to any function: click «Assign» and then the key (Esc — cancel).\n<color=#c0c0c0>Nothing is assigned by default. Pick keys the game doesn't use (for example F9–F12 or the numpad), because the game reacts to its own keys too. While you type in the chat, the console or a search field, binds don't fire.</color>
+438	Open / hide the mod menu
+439	Default
+440	Back to F7
+441	Second key for the menu
+442	Remove the second key
+443	<color=#c0c0c0>If you assign a letter or a digit to the menu, it won't work while you type in the chat or a search field. Esc always closes the menu.</color>
+444	  <color=#80ff80>on</color>
+445	  <color=#909090>off</color>
+446	<color=#ffd080>press a key…</color>
+447	Assign
+448	Key {0} assigned.
+449	Torches will appear once you enter the world.
+450	<color=#e8d8b0>Last time:</color>
+451	Torches and fires of the base
+452	<color=#c0c0c0>Here you see how many torches, sconces, braziers and fires are around, how much fuel it takes to fill them up and how much you have. Refuelling takes fuel from the inventory and gives it to the emptiest first, so even when resin is short as few as possible go out. Torches in dungeons and eternal fires don't count. Items marked «keep» are not used.\nThe game loads buildings only around the player (about 100–150 m), so for a big base stand closer to its centre.</color>
+453	Search radius: {0:0} m
+454	Refuel all from the inventory
+455	Hide the highlight of empty ones
+456	Highlight empty ones
+457	Empty torches and fires highlighted for 3 minutes. Close the menu and look around.
+458	<color=#909090>No built torches or fires to refuel within this radius.</color>
+459	<b>On «{0}» fuel: {1}</b>
+460	burning: {0}
+461	, <color=#ff9060>out of fuel: {0}</color>
+462	, switched off: {0}
+463	<color=#80ff80>all full</color>
+464	<color=#80ff80>you have {0} — enough</color>
+465	<color=#ffb040>you have {0} — {1} short</color>
+466	To fill them all up you need: <b>{0}</b> ({1})
+467	The first one goes out in: {0}
+468	<color=#c0c0c0>• {0} ×{1} — full lasts {2}</color>
+469	Refuel «{0}»: {1} of {2}
+470	To:
+471	 Accept items friends send
+472	<color=#c0c0c0>There are no other players in the world now.</color>
+473	<color=#80ff80>{0} has Valheim Helper: the item appears in their inventory at once.</color>\n<color=#c0c0c0>The item sent is an ordinary one, like crafted or picked up, so your friend's achievements are not affected.</color>
+474	<color=#c0c0c0>Checking whether {0} has Valheim Helper…</color>
+475	<color=#ffb040>{0} has another version of Valheim Helper, so you can't give them items. Update to the same version.</color>
+476	<color=#ffb040>{0} doesn't have Valheim Helper, so you can't give them items: a player's inventory is changed only by their own game. Ask them to install the same version of the mod.</color>
+477	{0} doesn't have this version of Valheim Helper, the item was not sent.
+478	Sending {0}: {1} ×{2} (quality {3})…
+479	Tameable
+480	The list of mobs will appear once you enter the world.
+481	<color=#c0c0c0>Mobs appear in front of you the same way the world creates them: without the «cheated» flag, so their loot, trophies and kills count as usual. Bosses created this way behave as if summoned at the altar.</color>
+482	Search:
+483	 Show the game's service / unused mobs
+484	Amount:
+485	  Level:
+486	 Tamed right away (won't attack players)
+487	Remove mobs created by the mod ({0})
+488	Mobs removed: {0}.
+489	<color=#c0c0c0>Showing the first {0} of {1}, narrow the search.</color>
+490	  <color=#ff8060>boss</color>
+491	  <color=#80ff80>tameable</color>
+492	Create
+493	Enter the amount as a number.
+494	Could not create this mob.
+495	, tamed
+496	Created: {0} ×{1}{2}{3}.
+497	World modifiers
+498	<color=#c0c0c0>The same settings as in the «World modifiers» menu when you choose a world, but right in the game. The game considers a world «cheated» only when it holds values that menu doesn't have (they are set only with the console). Here you can choose only options from the game's menu, and the mod checks every value against its list once more, so achievements are not blocked. The game itself also lets you change modifiers this way with the setworldmodifier / setworldpreset commands without a cheat flag.</color>
+499	<color=#ffb040>Note: achievements tied to combat difficulty (playing on hard or very hard) count only while that difficulty is set. If you lower «Combat», progress of exactly those achievements stops for that time.</color>

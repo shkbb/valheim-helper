@@ -1,0 +1,120 @@
+500	<color=#80ff80>The world now holds only values from the game's menu — by modifiers the world is not «cheated».</color>
+501	<color=#ff8060>The world already holds values that are not from the game's menu, which make it «cheated»:
+502	. You can remove them in «Settings» → «Achievements» → «Clean the world». They are not changed here.</color>
+503	<color=#ffd080>Only the world host can change these; you see the current values.</color>
+504	Loot
+505	The mod's loot multiplier (mobs, chests, trees, ore)
+506	<color=#c0c0c0>Works on top of the «Resources» modifier below: that one is for the whole world and only with the game's options, this one is in your game, up to ×10, and doesn't touch the world modifiers, so it doesn't touch achievements either. Loot is counted by the game of whoever killed the mob or opened the chest, so with sync («Time and weather») the multiplier works for both of you.</color>
+507	Presets
+508	<color=#c0c0c0>A preset only fills in the choice below; nothing changes until you click «Apply».</color>
+509	Adjust
+510	<b>{0}</b>: now «{1}»
+511	<color=#909090>Nothing chosen to change.</color>
+512	<b>Will be changed:</b>\n
+513	Apply to the whole world
+514	Cancel the choice
+515	<color=#c0c0c0>Changes apply at once for all players and are saved with the world.</color>
+516	Preset «{0}» chosen. Check the changes below and click «Apply».
+517	turn on
+518	turn off
+519	Now: <b>{0:0} FPS</b> ({1:0.0} ms per frame). While this menu is open it slows the game a little itself, so the tests close it.
+520	Building parts in the layer: {0}. Not drawn (smaller than a few pixels): {1}, without shadow: {2}.\nFires put to sleep: {3} (particle systems paused: {4}), flicker frozen: {5}. Sounds paused: {6}.\nLights the game would keep on: {7}, turned off by the layer: {8}, with shadow: {9}. Instanced materials: {10}. The layer costs: {11:0.00} ms per frame.
+521	Valheim Helper optimization layer
+522	<color=#c0c0c0>The mod's own layer on top of the game's settings. It changes only <i>how</i> the base is drawn and sounds, not what happens in it: buildings, support, wear, fire, smoke and furnaces work exactly as in the game, so achievements and the world's «fairness» are not affected.\n• <b>Instancing</b>: identical walls, beams and floors go to the graphics card in batches.\n• <b>Small things far away</b>: what is smaller than a few pixels on screen is not drawn, and small things cast no shadow.\n• <b>Fire out of view</b>: particles of fires you can't see are paused, distant lights don't flicker.\n• <b>Sound</b>: crackling fires and humming stations you can no longer hear are paused.\n• <b>Light budget</b>: when there are more lights than the limit, the least noticeable go out (off-screen first), the ones close to you always burn; shadows — only for the most noticeable.</color>
+523	 Turn on the optimization layer
+524	 Instancing of building materials
+525	 Don't draw small things far away and remove their shadows
+526	 Put fire out of view to sleep, distant lights without flicker
+527	 Pause sounds you can't hear
+528	 Light budget: up to {0} lights (always within {1:0} m), shadows up to {2}
+529	Strength:
+530	Test it on your base
+531	<color=#c0c0c0>Stand where it lags and don't move: the menu closes, the result appears at the top left and here.\n• <b>Detailed test</b> (≈55 s): FPS without the layer, then each function alone, all together and again without the layer. You see what gives a gain and what doesn't.\n• <b>The mod itself</b> (≈26 s): turns off the mod's components (menu, map, storage, keys); the game patches are one-line checks, they stay.</color>
+532	Test… {0:0}%
+533	Detailed test
+534	Wait…
+535	How much the mod itself takes
+536	<color=#e8d8b0>Detailed test:</color>
+537	<color=#909090>The mod has not been checked yet.</color>
+538	<color=#e8d8b0>Mod:</color>
+539	What exactly lags: frame measurement
+540	<color=#c0c0c0>For 8 seconds every stage of the Unity frame (physics, scripts, particles, rendering, interface) and the game's main systems are measured: buildings, network, characters, smoke, sound. The menu closes during the measurement. The result is also written to ValheimHelper.log.</color>
+541	Measuring… {0:0}%
+542	Measure the frame (8 s)
+543	<color=#e8d8b0>Frame stages (ms per frame):</color>
+544	<color=#e8d8b0>Game systems:</color>
+545	<color=#e8d8b0>Mod components:</color>
+546	What is loaded around
+547	Count
+548	<color=#909090>Counting took {0:0} ms.</color>
+549	  {0} ms — {1}{2}
+550	  <color=#909090>nothing noticeable</color>
+551	Pick up from the ground
+552	<color=#c0c0c0>Everything lying around within the radius: drops from mobs, felled trees, broken rocks. The game itself picks it up, as if you pressed E at each pile: only what fits by space and weight. Weapons don't go into your hands by themselves.</color>
+553	Pick up within: {0:0} m
+554	Picking up…
+555	Pick up everything ({0} pcs)
+556	<color=#c0c0c0>Nothing lies nearby.</color>
+557	, piles: {0}
+558	{0} ×{1}  <color=#909090>{2:0} m{3}</color>
+559	Pick up
+560	To
+561	Teleport to {0}
+562	Effects
+563	<color=#c0c0c0>All status effects of the game: Forsaken powers, potions and meads, set bonuses, rested, negative ones. An effect is applied by the game's own mechanism, so achievements are not affected. Some effects (wet, cold, shelter) are removed by the game at once if their condition is missing. Choose the duration before «Apply»: «Until I remove it» keeps renewing the timer until you click «Remove». For a friend the duration is set if they have this version of Valheim Helper too, otherwise it is as in the game; removing from a friend also works only then.</color>
+564	For how long:
+565	Remove all from me
+566	<color=#909090>Showing {0} of {1}</color>
+567	  <color=#80ff80>active until you remove it</color>
+568	  <color=#80ff80>active for {0} more</color>
+569	  <color=#80ff80>active</color>
+570	  <color=#909090>in the game {0}</color>
+571	Apply
+572	Remove
+573	<color=#c0c0c0>Effects are applied to you. Choose a friend at the top to apply to them or teleport to them.</color>
+574	<color=#80ff80>{0} has Valheim Helper:</color> <color=#c0c0c0>you can apply and remove effects and teleport to them wherever they are.</color>
+575	<color=#ffb040>{0} doesn't have this version of Valheim Helper:</color> <color=#c0c0c0>you can apply effects (it's the game's own command) but not remove them. Teleport works if they are near, you are the host or they show themselves on the map.</color>
+576	All together
+577	By chests nearby
+578	This will appear once you enter the world.
+579	Storage
+580	<color=#c0c0c0>Stand in the middle of your storage and click «Put away» (or assign a key in «Settings» → «Keys»). Every item goes where you (or a friend with the mod) last put it by hand, even if that chest is empty now. Next — into the chest where it already lies: first it tops up incomplete stacks, then it goes beside them in the same row. A new item goes to its group (kinds of wood to wood, ore to metals) or into the chest of its biome; a chest with a purpose takes only its own.\nWhat finds no room the mod lays out into empty chests in shelves: wood, stone, metals, trophies, biome materials — each shelf in its own chest, neighbouring shelves side by side. Don't like where it went? Move it by hand — the chest will remember. Items marked «keep» stay with you.</color>
+581	Putting away…
+582	Put items from the inventory into chests nearby
+583	Storage radius: {0:0} m
+584	chests nearby: {0}
+585	<color=#909090>This radius is for everything «nearby»: putting away, furnaces, crafting and building from chests, and from the storage centre — for orders from afar.</color>
+586	 Lay out into empty chests what finds no room
+587	 Chests remember what is put into them by hand
+588	Storage centre: {0:0}, {1:0} — {2:0} m from you
+589	<color=#ffb040>The storage centre is not set: without it you can't see what the storage holds when you are away, and can't order.</color>
+590	Storage centre here
+591	What the storage holds
+592	<color=#c0c0c0>«Show» highlights the chests with this item (when you are near). «Deliver» — the item flies to you wherever you are: ≈25 m/s (1 km — 40 s), from 15 s to 4 min, the flight is shown on the map; what doesn't fit into the inventory lands next to you. Chests someone has opened, chests a friend stands next to, or other players' personal chests are not touched. The host sees the storage and carries out orders, so they need this version of Valheim Helper.</color>
+593	Waiting…
+594	<color=#ffd080>Flying to you:</color> {0} — {1} left
+595	<color=#909090>The list is too long, not everything is shown — narrow the search.</color>
+596	Amount at once
+597	 Show the amount picker next to the crafting window
+598	<color=#c0c0c0>To the right of the crafting window, level with the «Craft» button, appear «−», the amount, «+» and «Max» (they cover nothing). «+» and «−» change by 1, with Shift by 10; the mouse wheel over them works too. «Max» is as many as the materials (together with chests nearby, if that is on below) and inventory space allow. Click the number to go back to 1. The game itself crafts, as with Shift held (where it is always 5): materials, skill experience and bonus items — for every piece. The amount is not shown for upgrading items. Another recipe or a closed window — back to 1.</color>
+599	Crafting and building from chests
+600	 Count materials in chests nearby when crafting
+601	 Count materials in chests nearby when building with the hammer (and planting with the cultivator)
+602	<color=#c0c0c0>«Nearby» means within the storage radius, now {0:0} m (changed in «Base» → «Storage»).\nIn the crafting window (any station or crafting by hand) and with the hammer in your hands, materials in chests around you count as yours: recipes and buildings light up as available, and a material's icon reads «need/have», for example 8/135, where «have» is the inventory together with the chests. When you click «Craft» or place a building, the mod takes from the nearest chests only what the inventory lacks, and the game spends it as usual. Only the game decides which recipes and buildings are unlocked: the mod unlocks nothing. If another player has opened a chest, nothing is taken from it.</color>
+603	Finished — straight into a chest
+604	 Put what smelters, kilns, the windmill, the spinning wheel and the refinery make into a chest nearby
+605	<color=#c0c0c0>A bar (coal, flour…) goes into a chest within the storage radius ({0:0} m from the furnace) where you last put such an item by hand, or if there is none — into the chest where it already lies. No such chest or no room in it — it drops from the furnace as usual. Works when your game «owns» the furnace (you are near, or the host with no other players near it); for a friend without the mod everything drops as usual.</color>
+606	<color=#c0c0c0>Puts into every furnace within the storage radius ({0:0} m) everything it processes and fuel for it: first from the inventory, and what is missing — from chests nearby. The checkboxes below decide which furnaces to load. Each furnace takes only as much as fits, and of several materials — the one you have most of (ordinary wood before valuable wood). Ore is shared equally so all furnaces work. Exactly as much fuel goes in as the ore in the furnace needs (say, 2 coal per 1 iron ore), without a reserve. Items marked «keep» are not taken, so marked wood won't burn in a kiln.</color>
+607	Loading…
+608	 Smelters and blast furnaces (ore + coal)
+609	 Kilns (wood)
+610	 Spinning wheel, windmill, eitr refinery
+611	furnaces nearby: {0}
+612	Keep
+613	<color=#c0c0c0>Mark items the mod must not take out of the inventory, neither into chests, nor into furnaces, nor into torches: tools, food, anything. The rest is moved. What you wear and hold is never touched.\nYou can also mark them right in the inventory: assign the key «Keep: the item under the cursor» in «Settings» → «Keys», open the inventory, point at an item and press it. Marked items show a padlock in the inventory.</color>
+614	<color=#909090>The inventory is empty.</color>
+615	Chest purpose
+616	<color=#c0c0c0>You can tell an empty chest in advance what it will hold. A chest with a purpose takes only its group or its biome (and what already lies in it). Friends with Valheim Helper see the purpose; in a game without the mod it's an ordinary chest.</color>
+617	<color=#ffd080>Look at a chest (crosshair on it) and open the menu — you can set it up here.</color>
+618	Forget
+619	 Show the purpose when looking at a chest

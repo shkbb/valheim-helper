@@ -1,0 +1,130 @@
+250	Bosses
+251	Traders
+252	Dungeons
+253	Special places
+254	Runestones
+255	Camps and settlements
+256	Resources
+257	Ships
+258	Ruins and buildings
+259	Other
+260	Layers
+261	Search
+262	Marks
+263	Drawings
+264	Look
+265	Only for me
+266	For friends with the mod
+267	There is no mark under the cursor.
+268	<b>Alt + left click</b> on the map — place a mark, <b>Alt + right click</b> on a mark — remove it. Also with «Place a mark» in a place's card or with the key «Mark where you look» (Settings → Keys). A mark is visible in the world too: an icon, its name and the distance. «Guide» — an arrow at the edge of the screen shows the way. The dot next to the name is the mark's colour: click it to change.
+269	<color=#ffb040>Shared marks are kept by the host, and nothing has come from them yet: new marks are only yours for now.</color>
+270	 Show marks in the world (not only on the map)
+271	 · shared
+272	Guiding
+273	Guide
+274	On map
+275	doesn't eat
+276	<color=#ffb040>hungry</color>
+277	<color=#80ff80>fed</color>
+278	, <color=#ff9ad0>pregnant</color>
+279	, follows {0}
+280	<b>{0}</b>{1}\n{2:0}/{3:0} health · {4}\n{5}
+281	<color=#ffd84a>★ mark</color>
+282	<color=#80ff80>✓ done</color>
+283	\n<color=#a0a0a0>Click — details</color>
+284	« World map
+285	<b><color=#ffd88c>World map</color></b>
+286	<b>Hold Ctrl</b> and draw right on the map: <b>left button</b> — a line, <b>right</b> — erase. <b>Ctrl+Z</b> — undo, <b>Ctrl+Y</b> — redo (erasing too). Without Ctrl the map works as usual; the wheel zooms. Lines are tied to places in the world and show on the minimap. When a friend draws on the shared layer, you see their cursor with their name and the line they draw.
+287	<color=#ffb040>Shared drawings are kept by the host. Nothing has come from the host yet: they don't have this version of Valheim Helper or the data is still on its way. For now the pen draws only for you.</color>
+288	<color=#c0c0c0>Everyone with the mod sees shared lines and can erase them; the host keeps them.</color>
+289	<color=#c0c0c0>Only you see these lines; they are kept on your computer for this world.</color>
+290	Width: {0:0}
+291	Undo (Ctrl+Z)
+292	Redo (Ctrl+Y)
+293	Erase my shared ones
+294	Erase all mine
+295	Erase all shared (host)
+296	 Show mine ({0})
+297	 Show shared ({0})
+298	 Drawings on the minimap
+299	Seed: <b>
+300	Copy
+301	Seed copied to the clipboard.
+302	Refresh
+303	Data from your world: {0} places
+304	Data from the host: {0} places, updated {1} s ago
+305	Asking the host for data…
+306	<color=#ffb040>The host did not answer: they don't seem to have Valheim Helper. Only the host knows the list of the world's places.</color>
+307	<color=#ffb040>The host has another version of Valheim Helper — both of you should update.</color>
+308	Loading…
+309	★ Mark placed
+310	☆ Place a mark
+311	✓ Done
+312	Mark as done
+313	Guiding here
+314	Guide here
+315	The arrow at the edge of the screen leads to «{0}».
+316	Show on the map
+317	Favourite places ({0}) are marks now: the «Marks» tab.
+318	No data about the world's places yet.
+319	Default
+320	None
+321	  <color=#ffd080>partly</color>
+322	 <b>Tamed animals</b>  <color=#a0a0a0>green — fed, orange — hungry</color>
+323	<color=#a0a0a0>Over the whole world, explored or not: the mod worked out from the world seed what the game places where.</color>
+324	<color=#ffd080>Working out the resources of the whole world from the seed: {0:0}% ({1}); what is nearest to you is ready already.</color>
+325	fixed
+326	{0} possible places
+327	{0}, someone has been near {1}
+328	Type what you are looking for: an item («copper», «cloudberry», «Dyrnwyn»), a creature («troll»), a place («burial») or a trader («sells»). For an item the mod shows every place to get it over the whole world; for a place, the nearest one.
+329	 <color=#ffb040>The mod is learning what the places hold in the background (only the first time, about a minute, without lag); search by items will start working by itself.</color>
+330	  <color=#ffd070>searching…</color>
+331	  <color=#80ff80>on the map</color>
+332	Click an item — every place to get it appears on the map; click again — hide.
+333	<b>Places</b> ({0}): click — shows the nearest, again — the next one.
+334	Nothing found.
+335	{0}, nearest
+336	Highlighted: <b>{0}</b>
+337	Hide
+338	On the map: <b>{0}</b> — {1}
+339	«{0}»: {1} places over the whole world
+340	, other sources will appear in a moment.
+341	«{0}»: looking for sources in explored zones…
+342	«{0}»: no sources on the map.
+343	 — {0} over the whole world
+344	no sources outside places
+345	<color=#a0a0a0>Point at the map to see the coordinates</color>
+346	Cursor: X {0:0}  Z {1:0}
+347	 Show unexplored areas (like data from a cartography table)
+348	<color=#ffb040>Showing shared data is turned off on the map. Turn it on with the button on the map itself, or unexplored areas won't be visible.</color>
+349	 Coloured dots instead of icons
+350	Icon size: {0:0}
+351	<color=#c0c0c0>Place icons grow as you zoom in and shrink as you zoom out.</color>
+352	 Show icons on the minimap in the corner too
+353	Minimap icons: {0:0}
+354	 Show height (Y)
+355	 Hide places marked as done ({0})
+356	Clear all
+357	«Done» marks cleared.
+358	<b>Biomes</b>  <color=#c0c0c0>hidden ones are greyed out</color>
+359	Show all biomes
+360	Hide all
+361	Reset map settings
+362	Map settings reset.
+363	{0:0} m
+364	{0:0.0} km
+365	<color=#80ff80>explored on your map</color>
+366	<color=#c0c0c0>not explored on your map yet</color>
+367	<color=#c0c0c0>found among the world's objects</color>
+368	<color=#80ff80>fixed place</color>
+369	<color=#ffd080>one of the possible places</color>
+370	<color=#c0c0c0>someone has been here</color>
+371	This is not a location but the world's «vegetation». Such objects exist only in zones already generated (someone has been near), so the mod takes them from the host's world data: they are not visible in unexplored places, and depleted or destroyed ones vanish from the map.
+372	Fixed place: the game has chosen it already, there are no other options any more.
+373	One of {0} possible places. When a player first comes near one of them, the game fixes it, and the rest vanish from the map.
+374	The zone has been generated: a player has been near.
+375	Nobody has been near yet: the zone has not been generated.
+376	 — click again</color>
+377	Ancient root (sap)
+378	Copper vein
+379	Tin ore

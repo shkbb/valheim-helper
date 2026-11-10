@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Checks the pure rules of the mod (storage sorting, chest memory, shelves, render layer) and their speed, without the game. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\ValheimHelper\Storage\SortRules.cs" Link="SortRules.cs" />
+    <Compile Include="..\..\ValheimHelper\Storage\ChestMemoryRules.cs" Link="ChestMemoryRules.cs" />
+    <Compile Include="..\..\ValheimHelper\Storage\ShelfPlanner.cs" Link="ShelfPlanner.cs" />
+    <Compile Include="..\..\ValheimHelper\Perf\LodRules.cs" Link="LodRules.cs" />
+    <Compile Include="..\..\ValheimHelper\Map\SketchRules.cs" Link="SketchRules.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\WikiModel.cs" Link="WikiModel.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\Html.cs" Link="Html.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\WikiConvert.cs" Link="WikiConvert.cs" />
+    <Compile Include="..\..\ValheimHelper\Core\Lang.cs" Link="Lang.cs" />
+    <Compile Include="..\..\ValheimHelper\Core\LangEn.cs" Link="LangEn.cs" />
+    <Compile Include="..\..\ValheimHelper\Core\LangEn.Generated.cs" Link="LangEn.Generated.cs" />
+  </ItemGroup>
+
+</Project>

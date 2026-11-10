@@ -1,0 +1,120 @@
+130	Only the host can change world modifiers.
+131	No such modifier found, nothing changed.
+132	The value «{0}» is not in the game's menu, so nothing changed.
+133	The switch «{0}» is not in the game's menu, so nothing changed.
+134	on
+135	off
+136	Nothing changed.
+137	World modifiers changed:
+138	Only the host can skip world time.
+139	Time is already being skipped.
+140	Skipping world time to {0}.
+141	Your friend restored the normal weather
+142	Your friend changed the weather:
+143	Your friend restored the real time of day
+144	Your friend fixed the time:
+145	Your friend changed the loot multiplier: ×{0:0.#}
+146	drops from:
+147	also from:
+148	 and {0} more
+149	 (the nearest {0} shown)
+150	«{0}»: {1} more sources in explored zones{2}.
+151	Could not work out the biomes for this map.
+152	Working out the map's biomes: {0}%
+153	Eikthyr
+154	The Elder
+155	Bonemass
+156	Moder
+157	Yagluth
+158	The Queen — Infested Citadel
+159	Fader
+160	Prison
+161	Haldor
+162	Hildir
+163	Bog Witch
+164	Burial Chambers
+165	Troll Cave
+166	Sunken Crypt
+167	Frost Cave
+168	Infested Mine
+169	Charred Fortress
+170	Smouldering Tomb
+171	Howling Cavern
+172	Sealed Tower
+173	Bear den
+174	Putrid Hole
+175	Pit
+176	Darkest Pit
+177	Sacrificial Stones
+178	Ancient forge
+179	Stone circle
+180	Plains stone circle
+181	Mysterious site
+182	Glade with a great stone
+183	Signpost
+184	Old battlefield
+185	Dolmen
+186	Northern memorial
+187	Fimbul
+188	Mörk Borg
+189	Hot spring
+190	Frozen pond
+191	Runestone (Meadows)
+192	Runestone (boars)
+193	Runestone (Black Forest)
+194	Runestone (greydwarfs)
+195	Runestone (Swamp)
+196	Runestone (draugr)
+197	Runestone (Mountains)
+198	Runestone (Plains)
+199	Runestone (Mistlands)
+200	Runestone (Ashlands)
+201	Runestone (Deep North)
+202	Runestone (dragons)
+203	Greydwarf camp
+204	Fuling village
+205	Fuling hut
+206	Abandoned village
+207	Abandoned farm
+208	Swamp hut
+209	Northern settlement
+210	Northern hut
+211	Lumberjack camp
+212	Tar pit
+213	Surtling fire hole
+214	Infested tree
+215	Dragon nest
+216	Giant remains
+217	Dvergr excavation
+218	Vulture nest
+219	Sulfur arch
+220	Charred stone
+221	Flametal vein (lava leviathan)
+222	Shipwreck
+223	Ship landing
+224	Frozen ship
+225	Shipwreck (Deep North)
+226	Ruins
+227	Stone tower ruins
+228	Stone tower
+229	Stone house
+230	Wooden house
+231	Swamp ruins
+232	Swamp well
+233	Grave
+234	Mountain well
+235	Mountain grave
+236	Abandoned hut
+237	Dvergr watchtower
+238	Dvergr harbour
+239	Dvergr lighthouse
+240	Dvergr road pillar
+241	Rock spire
+242	Statue
+243	Swords in the ground
+244	Viaduct
+245	Charred ruins
+246	Charred tower
+247	Ashlands ruins
+248	Fortress ruins
+249	Petrified troll

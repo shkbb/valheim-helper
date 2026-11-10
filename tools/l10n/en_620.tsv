@@ -1,0 +1,120 @@
+620	  <color=#c0c0c0>in chests: {0}, nearest {1:0} m away</color>
+621	Show
+622	Chests with «
+623	» highlighted for 10 seconds. Close the menu and look around.
+624	stack
+625	all
+626	Deliver
+627	<color=#909090>Nothing put away yet.</color>
+628	<color=#909090>Nothing loaded yet.</color>
+629	Anything
+630	<b>{0}</b> {1:0} m away,
+631	empty
+632	slots used: {0}
+633	<color=#909090>Memory: nothing has been put here by hand yet.</color>
+634	and {0} more
+635	<color=#e8d8b0>Memory (put by hand):</color>
+636	<color=#909090>Nothing like that.</color>
+637	<color=#909090>Asking the storage…</color>
+638	<color=#909090>No chests with items nearby.</color>
+639	The whole storage: different items <b>{0}</b>, pieces in all <b>{1}</b>
+640	Chests nearby: <b>{0}</b>, different items <b>{1}</b>, pieces in all <b>{2}</b>
+641	  <color=#909090>(set the storage centre to see the whole storage and order from afar)</color>
+642	<b>{0}</b>{1}  <color=#c0c0c0>{2:0} m, slots {3}/{4}</color>
+643	Other ·
+644	Clear
+645	Clear night
+646	Light rain
+647	Rain
+648	Thunderstorm
+649	Fog
+650	Snow
+651	Snowstorm
+652	06:00 morning
+653	12:00 noon
+654	18:00 evening
+655	00:00 night
+656	<b>Speed</b>
+657	Run, walk, swim
+658	<b>Under water</b>
+659	 Walk on the bottom: don't float up and keep the pickaxe, hammer, hoe or weapon in hand
+660	<color=#c0c0c0>Under water you can dig with the pickaxe, build, level the ground, chop and fight as on land. To float up, turn the mode off.\nThe game lets you change the ground only by ±8 m from its original height, so you can't dig deeper than that.</color>
+661	Enter the world to control time, weather and loot.
+662	<b>Time of day</b>
+663	   <color=#ffd080>(fixed for you at {0})</color>
+664	Now in the world: {0}, day {1}{2}
+665	Chosen time: {0}
+666	Skip world time to the chosen one (for everyone, like sleeping)
+667	<color=#c0c0c0>Only the host can skip the real world time.</color>
+668	Fix the chosen time only for me
+669	Time fixed:
+670	Back to the real time
+671	The time of day runs as in the world again.
+672	<color=#c0c0c0>«Skip» changes the real world time: a day passes, plants grow, ore finishes smelting.\n«Fix» changes only the lighting and day/night in your game, while the world lives on.</color>
+673	<b>Time speed-up</b>
+674	World time (furnaces, crops, day)
+675	<color=#c0c0c0>Only the host can speed up world time.</color>
+676	The whole game, like a speedhack
+677	<color=#c0c0c0>World time speeds up furnaces, fermenters, smokers, crops and the day cycle, while you move as usual.\nSpeedhack speeds up everything in your game, you too. Large values load the processor.</color>
+678	<b>Weather</b>
+679	Now: {0}
+680	  <color=#c0c0c0>(as the game intends)</color>
+681	  <color=#ffd080>(fixed by the mod)</color>
+682	 Show all weathers of the game
+683	<color=#c0c0c0>Every game works out the weather itself, by the biome where its player stands. The chosen weather applies for you over the whole map\n(and in dungeons) until you click «Normal game weather».</color>
+684	<b>Sync with a friend</b>
+685	 Send your friend the weather, the fixed time and the loot multiplier («Modifiers») if they have the mod too
+686	Send the current settings to your friend
+687	Settings sent.
+688	All
+689	Materials
+690	Food/potions
+691	Weapons
+692	Armor
+693	Valheim Helper   ({0} / Esc — hide)
+694	Character
+695	State
+696	Movement
+697	Skills
+698	Friends
+699	Players
+700	Items and crafting
+701	Give
+702	Crafting
+703	Building
+704	Base
+705	Furnaces
+706	Torches
+707	Animals
+708	World
+709	Time and weather
+710	Modifiers
+711	Mobs
+712	Camera
+713	Map
+714	Guide
+715	Settings
+716	Keys
+717	Achievements
+718	Image
+719	Performance
+720	Reset
+721	<color=#ff6060>Error, details in ValheimHelper.log</color>
+722	 God mode (mobs, falls, cold, lava, poison)
+723	 Infinite stamina
+724	 Infinite eitr
+725	 Food never runs out
+726	 No weight limit
+727	 Items don't break (weapons, tools, armor, shields, torches)
+728	Damage
+729	 For the weapon in hand — up to ~{0:0} per hit.
+730	<color=#c0c0c0>Works on weapon hits, arrows and spells. One hit is capped so that even with a backstab,\nstagger and the mob's weakness it stays below the game's 99 999 threshold, after which the mob becomes «cheated».
+731	Items repaired: {0}.
+732	All items are intact anyway.
+733	<color=#c0c0c0>All checkboxes and sliders of the menu are kept between game launches.</color>
+734	Turn everything off and set multipliers back to ×1
+735	All functions off, multipliers ×1, weather and time as in the game.
+736	 Fly (Space — up, Ctrl — down, Shift — faster)
+737	 Portals let ore and metals through
+738	 Build everything without resources and without a workbench nearby
+739	 Buildings don't collapse without support

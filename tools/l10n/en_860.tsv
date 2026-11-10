@@ -1,0 +1,172 @@
+860	Physics (sync)
+861	Loading assets
+862	Waiting for the next frame
+863	Waiting for the graphics card
+864	Outside the Unity frame
+865	Frame: {0:0.0} ms ({1:0} FPS), {2} frames measured. Valheim Helper mod: {3:0.00} ms per frame.
+866	Careful
+867	Balanced
+868	Maximum
+869	<color=#ff6060>Could not count, details in ValheimHelper.log</color>
+870	Building parts loaded: <b>{0}</b> (in the optimization layer: {1}). Each part is separate draw and shadow calls.
+871	Renderers: <b>{0}</b>, in the frame or in shadows: <b>{1}</b>, of them casting shadows: {2}.
+872	Lights on: <b>{0}</b> (point lights {1}), with shadows: <b>{2}</b>. Every point light with a shadow draws the scene around it 6 more times.
+873	Game: point light limit {0}, with shadows {1}; sun shadows up to {2:0} m, cascades {3}; LOD bias {4:0.##}.
+874	Particle systems: {0}, playing: <b>{1}</b>, paused: {2}, particles: {3}. Put to sleep by the layer: {4} fires.
+875	<color=#c0c0c0>Most particles are playing in:
+876	Fires and torches: {0}, burning: <b>{1}</b>. Smoke in the air: {2} (the game's limit is 100, smoke is physical objects).
+877	Sounds playing: {0} (paused by the layer: {1}). Cloth (banners, capes, sails): {2}.
+878	Characters: <b>{0}</b> (tamed {1}). Items on the ground: <b>{2}</b>. Physical bodies moving: {3}.
+879	you are the host
+880	you are a client
+881	Network: {0}, players connected: {1}, objects in the world (ZDO): {2}.
+882	nothing
+883	unlimited
+884	This chest is not available.
+885	The chest forgot what was put into it by hand.
+886	Max
+887	Taking materials from chests…
+888	Could not take from chests:
+889	. Maybe another player has opened the chest or there is no room in the inventory.
+890	Taking materials from chests, place it again
+891	Item data is not ready yet, try again in a moment.
+892	All torches and fires nearby are full already.
+893	Torches and fires refuelled: {0}. Used: {1}.
+894	Nothing refuelled.
+895	 Not enough:
+896	{0} h {1} min
+897	{0} (≈{1:0.#} game days)
+898	Already loading furnaces, wait a second.
+899	No furnaces to load within {0:0} m.
+900	There are furnaces nearby ({0}), but all their kinds are turned off by the checkboxes in «Base» → «Furnaces».
+901	Nothing loaded.
+902	Furnaces nearby: {0}, but neither the inventory nor the chests nearby hold anything that goes into them.
+903	Loading furnaces ({0})…
+904	{0}: marked «keep»
+905	{0} ×{1}: such furnaces are turned off by a checkbox
+906	{0} ×{1}: the furnaces ({2}) already have enough fuel for all the ore; not adding more, since without ore it would just sit there
+907	{0} ×{1}: {2} are full already
+908	 Not loaded:
+909	Nothing loaded.
+910	 Taken from chests nearby: {0}.
+911	Loaded into furnaces (
+912	Open the inventory and point at an item.
+913	Point at an item in your inventory.
+914	Keep:
+915	Put away again:
+916	Nothing lies nearby.
+917	Picked up: {0} pcs ({1} piles).
+918	Nothing picked up.
+919	 Didn't fit (space or weight): {0} piles.
+920	 The owner didn't give it (another player nearby?): {0}.
+921	First stand in the middle of your storage and click «Storage centre here».
+922	Ordered, the storage is gathering it…
+923	 {0} more are next to a friend now, not touching them while they are near.
+924	No chests available to you within the storage radius.
+925	Chests in the storage: {0}.
+926	Nothing taken: it's gone already, or someone has opened the chest, or a friend is next to it now.
+927	{0} is flying to you, arrives in {1}.
+928	Delivery arrived: {0}. What didn't fit into the inventory lies next to you.
+929	Delivery arrived: {0}.
+930	Wood
+931	Stone
+932	stone, flint, marble, obsidian, crystals
+933	Ore and metals
+934	ore, scrap, bars, nails
+935	Coal
+936	Cores
+937	Hides
+938	hides, leather, scales
+939	Seeds
+940	seeds, cones, barley, flax — everything planted with the cultivator
+941	Raw meat
+942	everything cooked or baked
+943	Valuables
+944	coins and what the trader buys
+945	Trophies
+946	Fish
+947	Food
+948	Meads and potions
+949	Arrows and bolts
+950	Gear
+951	weapons, armor, shields, tools, torches
+952	×{0}   <color=#c8b89a>{1:0} m</color>
+953	<color=#ff9060>empty</color>  <color=#c8b89a>{0:0} m</color>
+954	For:
+955	Already putting items away, wait a second.
+956	No chests to put items into within {0:0} m.
+957	Putting items into chests ({0})…
+958	Chest purpose:
+959	The chest is for anything now.
+960	Nothing in the inventory needs putting away: the rest is protected with «Keep» («Base»).
+961	Items put away: {0} (chests: {1}).
+962	Nothing put away.
+963	 New shelves in empty chests: {0}.
+964	 Chests skipped because other players had them open: {0}.
+965	\nNo suitable chest:
+966	\nDidn't fit:
+967	Biomes
+968	Tameable animals
+969	Traders and characters
+970	Points of interest
+971	Ores
+972	Metals
+973	Wood
+974	Resource nodes
+975	Farming
+976	Shields
+977	Arrows
+978	Tools
+979	Crafting stations
+980	Building pieces
+981	Furniture
+982	Light sources
+983	Storage
+984	Mechanics
+985	Magic
+986	Guides
+987	Lore
+988	Link opened in the browser.
+989	There is no article «{0}» in the guide.
+990	Articles are loading…
+991	This article is not in the guide.
+992	Valheim guide
+993	Articles of the Valheim wiki right in the game: items, creatures, biomes, buildings, mechanics — with pictures, tables and links between articles. The search at the top also understands names from the game in your game's language. Links open articles right here, «‹ Back» returns.
+994	No articles found: the mod folder has no wiki. Reinstall the mod from the full archive.
+995	Could not read the articles:
+996	Sections
+997	All categories ({0})
+998	All articles from A to Z ({0})
+999	Language of the articles
+1000	The button at the top right switches the language of the articles — separately from the menu language. Available now:
+1001	. Ukrainian articles will appear here once they are translated and proofread.
+1002	For translators
+1003	Export the game glossary
+1004	 — the game's official names in English and Ukrainian into wiki/glossary_game.tsv next to the mod, for the wiki translation tool.
+1005	There are no articles in this category.
+1006	Articles: {0}.
+1007	To the sections
+1008	All categories
+1009	All articles
+1010	There is no Russian version
+1011	There is no Russian version of the guide and there won't be one. If you want to help, support the Defence Forces of Ukraine and the people affected by the war:
+1012	Come Back Alive (Повернись живим)
+1013	help for the army
+1014	Serhiy Prytula Foundation
+1015	help for the army and civilians
+1016	Ukraine's official fundraising platform
+1017	Ukrainian Red Cross Society
+1018	humanitarian aid
+1019	Links open in the browser.
+1020	Categories:
+1021	Article from
+1022	 (opens in the browser).
+1023	Texts and images — authors of the Valheim wiki, licence {0}
+1024	; snapshot of {0}.
+1025	‹ Back
+1026	Forward ›
+1027	Home
+1028	Articles:
+1029	Search articles (names in your game's language work too)…
+1030	Articles are still loading…
+1031	   Русский

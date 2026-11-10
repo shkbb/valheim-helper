@@ -1,0 +1,23 @@
+# builds and packages
+dist/
+bin/
+obj/
+**/bin/
+**/obj/
+
+# saves, backups, local tools state
+backups/
+backup_saves_*/
+*.bak
+*.bak_*
+googlecloudtools.datacloud_telemetry.bak/
+.claude/
+
+# third-party binaries (BepInExPack is downloaded separately, see README)
+deps/
+
+# the wiki tool lives in its own folder with gigabytes of data; it gets its own repository/subfolder later
+wiki-localizer/
+
+# Python caches
+__pycache__/

@@ -1,0 +1,130 @@
+0	Enter the world with this character first.
+1	removed
+2	was not set
+3	Character cleaned and saved. Console cheats flag: {0}. Items cleaned: {1}.
+4	\nThe game will flag these items again (damage > 10000), drop them:
+5	enter the world.
+6	only the world host can do this.
+7	other players are in the world, ask them to leave for a minute.
+8	The world can't be cleaned:
+9	Error while cleaning:
+10	World cleaned and saved. Objects: {0}, items on the ground/stands: {1}, items in chests: {2} (chests: {3}).
+11	\nModifiers removed:
+12	\nChests still hold items the game will flag again (damage > 10000), drop them:
+13	only the host can check and clean the whole world.
+14	could not read the world modifiers
+15	God mode
+16	Infinite stamina
+17	Infinite eitr
+18	Food never runs out
+19	No weight limit
+20	Items don't break
+21	Repair all items
+22	Items repaired: {0}
+23	Heal fully
+24	Health restored
+25	Damage multiplier
+26	Fly
+27	Walk on the bottom under water
+28	Fast run
+29	Teleport from the map (Ctrl + RMB)
+30	Portals let ore through
+31	Build everything without resources
+32	Buildings without support
+33	World time speed-up
+34	Loot multiplier
+35	Skip world time to 06:00
+36	Skip world time to 18:00
+37	Normal game weather
+38	Weather: as the game intends
+39	World map on the large map
+40	Show unexplored areas on the map
+41	Put items into chests nearby
+42	Load furnaces nearby
+43	Keep: the item under the cursor in the inventory
+44	Refuel torches and fires nearby
+45	Mark in the world where you look
+46	Free camera for screenshots (on / off)
+47	Builder: next view mode (all → frame → … → all)
+48	Hide chest highlight
+49	: on
+50	: off
+51	 (×1 ↔ last value)
+52	Esc closes the menu, pick another key.
+53	Key {0} opens the mod menu. Pick another one or change the menu key at the top of the list.
+54	Posts and beams
+55	Walls
+56	Roofs
+57	Floors and stairs
+58	Doors and windows
+59	Other
+60	All buildings are visible.
+61	View mode: {0}.
+62	all
+63	frame only
+64	frame and floors
+65	no roofs
+66	walls only
+67	Free camera off.
+68	Enter the world.
+69	Free camera: mouse — look, walk keys — move, jump/crouch — up/down, run — faster, wheel — speed, F11 — screenshot. Esc — back.
+70	The game's localization is not loaded yet.
+71	Game glossary saved: {0} keys, {1} in Ukrainian. File: {2}
+72	Could not export the glossary, details in ValheimHelper.log
+73	{0} did not answer: they don't seem to have this version of Valheim Helper. Item not sent.
+74	Friend
+75	{0} is not in the game now, item not sent.
+76	{0} turned off receiving items, item not sent.
+77	{0}'s game has no such item, item not sent.
+78	The game always flags this item as cheated, so it was not sent.
+79	{0} wanted to send you {1}, but your inventory is full
+80	{0} has no free space in the inventory, item not sent.
+81	{0} sent you: {1} ×{2}
+82	{0} received: {1} ×{2} (quality {3}). What didn't fit lies at their feet.
+83	All
+84	Forsaken powers
+85	Potions and meads
+86	Set bonuses
+87	Rested and surroundings
+88	Negative
+89	Other
+90	As in the game
+91	1 min
+92	5 min
+93	15 min
+94	30 min
+95	1 h
+96	Until I remove it
+97	Me
+98	Effect «{0}» applied{1}.
+99	The game did not accept «{0}»: it only works under certain conditions (weather, a fire nearby and so on).
+100	«{0}» sent to {1}{2}. If the effect only works under certain conditions, their game may remove it at once.
+101	 Duration is as in the game: it can only be set if {0} has this version of Valheim Helper too.
+102	«{0}» sent to {1}. If the effect only works under certain conditions, their game may remove it at once.{2}
+103	, until you remove it
+104	 for
+105	{0} h
+106	{0} min
+107	{0} s
+108	Effect «{0}» removed.
+109	All effects removed.
+110	An effect can be removed from {0} only if they have this version of Valheim Helper: the game has no command of its own for it.
+111	Asking {0}'s game to remove «{1}».
+112	Asking {0}'s game to remove all effects.
+113	Choose the player to teleport to.
+114	You can't teleport right now.
+115	Asking {0}'s game where they are…
+116	Don't know where {0} is: they are far away, don't share their position on the map and don't have this version of Valheim Helper.
+117	Teleporting to {0}.
+118	{0} did not answer, teleport cancelled.
+119	{0} removed all effects from you
+120	{0} removed an effect from you
+121	effect
+122	{0} applied «{1}» to you{2}
+123	Teleporting to: {0}.
+124	Free building
+125	Raids on player bases
+126	Fire hazard
+127	Passive enemies
+128	No map
+129	The game's modifier menu is not available in this version of the game.

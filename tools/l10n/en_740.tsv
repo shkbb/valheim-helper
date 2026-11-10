@@ -1,0 +1,120 @@
+740	<color=#c0c0c0>While the mode is on, the hammer menu has every building unlocked, as in debugmode,\nand you can deconstruct buildings without a station nearby. When it's off, only learned buildings remain.\nIf you turn «without support» off, unsupported structures fall at once.\nWhen you build together, turn it on for both of you: collapse is counted by the game of whoever «owns» the area.</color>
+741	<color=#c0c0c0>Settings the game itself doesn't have. Only how the picture is drawn for you changes; the game, friends and achievements are not affected. «Glow» is the halo around fire, lava and magic: if effects dazzle you, lower it.</color>
+742	Brightness
+743	as in the game
+744	Gamma (midtones)
+745	Glow of fire and effects
+746	Back to the game's look
+747	View mode
+748	<color=#c0c0c0>Hide part of a building to see what is inside and how the structure holds. What is hidden is just not drawn for you: it is in place, solid (you can bump into it), and new pieces snap to it as usual. Friends see everything as always. A key to switch modes can be assigned in «Settings» → «Keys».</color>
+749	Frame only
+750	Frame and floors
+751	No roofs
+752	Walls only
+753	<color=#ffd070>Pieces hidden: {0}</color>
+754	The list of items will appear once you enter the world.
+755	 Show the game's service / unused items
+756	  Quality:
+757	<color=#c0c0c0>Showing the first {0} of {1}, narrow the search.</color>
+758	Give
+759	Enter the world to change skills.
+760	All skills to 100
+761	All skills raised to 100.
+762	<b>What blocks achievements now</b>
+763	The game is marked as modded (isModded):
+764	The character has used console cheats:
+765	Flagged items in the inventory:
+766	<color=#ffb040>The game always flags these items (damage > 10000), they must be dropped:
+767	<b>Cleaning saves</b>\n<color=#c0c0c0>Back up your saves first. Progress the game didn't count while the save was flagged won't come back: after cleaning, only new actions count.</color>
+768	Clean the character (every player in their own game)
+769	Check the world
+770	 Also remove «cheated» world modifiers (their effect on the game goes away)
+771	<color=#ffb040>The world can't be cleaned now:
+772	Clean the world and save
+773	<b>Bypassing checks</b>
+774	 Ignore the game's flags (works while the game runs with this mod)
+775	World: <color=#c0c0c0>click «Check the world»</color>
+776	World: <color=#ff6060>
+777	«Cheated» world modifiers: <color=#ffb040>
+778	«Cheated» world modifiers:
+779	<color=#80ff80>none</color>
+780	Flagged objects (buildings, mobs, stations):
+781	Flagged items on the ground/stands:
+782	Flagged items in chests:
+783	 (chests: {0})
+784	<color=#ffb040>Chests hold items the game always flags (damage > 10000):
+785	<color=#c0c0c0>Records that could not be read (skipped unchanged): {0}</color>
+786	Given: {0} ×{1} (quality {2}). What didn't fit lies at your feet.
+787	No free space in the inventory.
+788	<color=#ff8060>yes</color>
+789	<color=#80ff80>no</color>
+790	\nIn chests nearby: {0}
+791	A measurement is already running, wait.
+792	Turn on the optimization layer first.
+793	without the layer
+794	with the layer
+795	without the mod
+796	with the mod
+797	instancing
+798	small things and shadows
+799	fire and flicker
+800	sound
+801	light budget
+802	all together
+803	Performance test ≈ {0:0} s: stand still and don't turn the camera.
+804	Without the layer: {0:0.0} FPS (1% worst {1:0}), {2:0.0} ms. With the layer: {3:0.0} FPS (1% worst {4:0}), {5:0.0} ms. Difference: {6:+0;-0}%.
+805	within the margin of error
+806	the mod takes part of the frame
+807	even faster with the mod, so it's noise
+808	Without the mod's components: {0:0.0} FPS ({1:0.00} ms). With the mod: {2:0.0} FPS ({3:0.00} ms). The mod takes: {4:+0.0;-0.0}% — {5}.
+809	Without the layer: {0:0.0} FPS ({1:0.0} ms, 1% worst {2:0}). Spread between the start and the end of the test: {3:0.0}%.
+810	{0}: {1:0.0} FPS ({2:+0.0;-0.0}%), {3:0.0} ms ({4:+0.00;-0.00}), 1% worst {5:0}.
+811	The detailed test is done, the result is in «Settings» → «Performance».
+812	Buildings: wear, support, roof (WearNTear)
+813	Network (ZNet)
+814	  └ syncing objects with friends (ZDOMan)
+815	Objects appearing and disappearing around (ZNetScene)
+816	World zones (ZoneSystem)
+817	Characters, animals, AI, ships (FixedUpdate)
+818	  └ characters and animals
+819	  └ AI of mobs and tamed animals
+820	  └ AI of beasts
+821	Smoke, sounds, flicker, workbenches (Update)
+822	  └ smoke
+823	  └ smoke sources
+824	  └ sounds
+825	  └ light flicker
+826	  └ workbenches
+827	  └ grass and bushes
+828	Terrain, object movement (LateUpdate)
+829	  └ terrain
+830	Drawing smoke
+831	Fires and torches (checks)
+832	Furnaces and processing
+833	Weather, sky, lighting (EnvMan)
+834	Player (Update)
+835	Player (FixedUpdate)
+836	Player (LateUpdate)
+837	Interface: HUD
+838	Interface: inventory
+839	Interface: map and minimap
+840	Chat
+841	Sound (scripts)
+842	Music
+843	Physics
+844	FixedUpdate scripts
+845	Update scripts (game and mod)
+846	Coroutines (the game's light LOD)
+847	LateUpdate scripts
+848	Animations
+849	Animations (end)
+850	Particles: simulation
+851	Particles: finishing
+852	Render: the processor preparing the frame (objects, shadows, light)
+853	Updating renderers
+854	Skinning (characters, cloth)
+855	Game interface (layout)
+856	Game interface (geometry)
+857	Sound (engine)
+858	Presenting the frame (waiting for the graphics card)
+859	End of frame
