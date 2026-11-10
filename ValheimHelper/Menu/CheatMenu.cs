@@ -481,20 +481,22 @@ namespace ValheimHelper
         {
             GUILayout.BeginVertical(HelperSkin.Section);
             GUILayout.Label(Lang.T("Мова меню"), HelperSkin.Header);
-            string[] options = { Lang.T("Як мова гри"), "Українська", "English" };
-            int current = Lang.Chosen == Lang.Ukrainian ? 1 : Lang.Chosen == Lang.English ? 2 : 0;
-            int chosen = GUILayout.SelectionGrid(current, options, 3, GUILayout.Height(32f));
+            string[] options = new string[Lang.Codes.Length + 1];
+            options[0] = Lang.T("Як мова гри");
+            System.Array.Copy(Lang.Names, 0, options, 1, Lang.Names.Length);
+            int current = System.Array.IndexOf(Lang.Codes, Lang.Chosen) + 1;
+            int chosen = GUILayout.SelectionGrid(current, options, 5, GUILayout.Height(68f));
             if (chosen != current)
             {
-                Lang.Chosen = chosen == 1 ? Lang.Ukrainian : chosen == 2 ? Lang.English : "";
+                Lang.Chosen = chosen == 0 ? "" : Lang.Codes[chosen - 1];
             }
             string game = Localization.instance != null ? Localization.instance.GetSelectedLanguage() : "English";
-            string next = Lang.Chosen == Lang.Ukrainian || Lang.Chosen == Lang.English ? Lang.Chosen : game == "Ukrainian" ? Lang.Ukrainian : Lang.English;
+            string next = Lang.Resolve(Lang.Chosen, game);
             if (next != Lang.Code)
             {
                 GUILayout.Label(Lang.T("<color=#ffd080>Мова меню зміниться після перезапуску гри.</color>"));
             }
-            GUILayout.Label(Lang.T("<color=#c0c0c0>«Як мова гри» — українська, коли гра українською, інакше англійська. " +
+            GUILayout.Label(Lang.T("<color=#c0c0c0>«Як мова гри» — мова гри, якщо мод її знає, інакше англійська. " +
                 "Мову статей довідника перемикає окрема кнопка вгорі праворуч у «Довідник».</color>"));
             GUILayout.EndVertical();
         }

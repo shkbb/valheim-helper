@@ -1384,6 +1384,7 @@ namespace ValheimHelper
             table["Виконати"] = "Unlock";
             table[" · у Steam: {0} з {1}"] = " · in Steam: {0} of {1}";
             table[" · <color=#c0c0c0>Steam не відповідає</color>"] = " · <color=#c0c0c0>Steam does not answer</color>";
+            table["<color=#c0c0c0>«Як мова гри» — мова гри, якщо мод її знає, інакше англійська. Мову статей довідника перемикає окрема кнопка вгорі праворуч у «Довідник».</color>"] = "<color=#c0c0c0>«As the game's language» — the game's language if the mod knows it, otherwise English. The language of the guide's articles is switched by its own button at the top right of «Guide».</color>";
         }
     }
 }

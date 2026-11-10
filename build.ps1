@@ -25,6 +25,13 @@ New-Item -ItemType Directory -Force $modDir | Out-Null
 Copy-Item (Join-Path $pack 'winhttp.dll') $gameDir
 Copy-Item (Join-Path $root 'installer\doorstop_config.ini') $gameDir
 Copy-Item (Join-Path $root 'ValheimHelper\bin\Release\netstandard2.1\ValheimHelper.dll') $modDir
+# Menu languages other than Ukrainian and English: ValheimHelper\lang\<code>.json (tools\l10n\gen_langs.py)
+$langSource = Join-Path $root 'ValheimHelper\lang'
+if (Test-Path $langSource) {
+    $langTarget = Join-Path $modDir 'lang'
+    New-Item -ItemType Directory -Force $langTarget | Out-Null
+    Copy-Item (Join-Path $langSource '*.json') $langTarget
+}
 foreach ($dep in '0Harmony.dll', 'MonoMod.RuntimeDetour.dll', 'MonoMod.Utils.dll', 'Mono.Cecil.dll') {
     Copy-Item (Join-Path $pack "BepInEx\core\$dep") $modDir
 }
