@@ -23,4 +23,9 @@
     <Compile Include="..\..\ValheimHelper\Core\LangEn.Generated.cs" Link="LangEn.Generated.cs" />
   </ItemGroup>
 
+  <!-- Lang.cs reads the menu languages (lang/<code>.json) with the game's own Json.NET -->
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json"><HintPath>D:\SteamLibrary\steamapps\common\Valheim\valheim_Data\Managed\Newtonsoft.Json.dll</HintPath></Reference>
+  </ItemGroup>
+
 </Project>

@@ -14,7 +14,8 @@ $project = Join-Path $root 'ValheimHelper\ValheimHelper.csproj'
 
 function Build-Edition([string]$edition) {
     $out = Join-Path $root ('ValheimHelper\bin\Release\' + $edition)
-    dotnet build $project -c Release -nologo "-p:Edition=$edition" -o $out
+    # the build's output goes to the screen, not into what the function returns
+    dotnet build $project -c Release -nologo "-p:Edition=$edition" -o $out | Out-Host
     if ($LASTEXITCODE -ne 0) { throw "Build failed: $edition" }
     return (Join-Path $out 'ValheimHelper.dll')
 }
