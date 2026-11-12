@@ -24,3 +24,11 @@ __pycache__/
 
 # internal working notes (kept locally, not part of the mod)
 ACHIEVEMENTS_PLAN.md
+ARCHITECTURE.md
+pack_lite.ps1
+tools/backup_saves.ps1
+tools/restore_saves.ps1
+tools/edition_errors.py
+tools/l10n/translate_agy.py
+tools/l10n/dump.py
+tools/l10n/uk_terms.py

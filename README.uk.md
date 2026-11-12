@@ -56,5 +56,3 @@ BepInExPack для Valheim (5.4.2350) розпакувати в `deps/BepInExPac
 .\build.ps1 -Editions full        # одна редакція
 dotnet build ValheimHelper\ValheimHelper.csproj -p:Edition=legal   # legal | helper | full
 ```
-
-Як мод обходить блокування досягнень і як усе влаштовано — `ARCHITECTURE.md`.

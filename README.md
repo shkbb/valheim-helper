@@ -56,5 +56,3 @@ Unpack BepInExPack for Valheim (5.4.2350) into `deps/BepInExPack`: `winhttp.dll`
 .\build.ps1 -Editions full        # one edition
 dotnet build ValheimHelper\ValheimHelper.csproj -p:Edition=legal   # legal | helper | full
 ```
-
-How the mod gets around the game's achievement blocks and how everything is organised: `ARCHITECTURE.md` (Ukrainian).
