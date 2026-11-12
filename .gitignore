@@ -21,3 +21,6 @@ wiki-localizer/
 
 # Python caches
 __pycache__/
+
+# internal working notes (kept locally, not part of the mod)
+ACHIEVEMENTS_PLAN.md
