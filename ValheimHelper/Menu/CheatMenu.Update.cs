@@ -24,7 +24,7 @@ namespace ValheimHelper
             {
                 GUILayout.Label("<color=#c0c0c0>" + Updater.Status + "</color>");
             }
-            GUILayout.Label(Lang.T("<color=#c0c0c0>Нова версія завантажується сама й встановлюється під час наступного запуску гри. " +
+            GUILayout.Label(Lang.T("<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. " +
                 "Довідник оновлюється окремо, просто з вікі.</color>"));
 #endif
             GUILayout.EndVertical();

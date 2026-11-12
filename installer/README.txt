@@ -29,8 +29,8 @@ The mod comes in three editions; this archive is one of them
 To switch, download another edition and install it over this one.
 
 UPDATES
-When the game starts, the mod checks GitHub for a newer version, downloads it in
-the background and installs it the next time you start the game.
+When you start the game, the mod checks GitHub for a newer version and, if
+there is one, installs it right away (a couple of seconds), before the game loads.
 Settings -> Updates: turn the check off, or check now. The wiki guide updates
 itself separately, straight from the wiki.
 
@@ -75,8 +75,8 @@ WHERE THINGS ARE
 Щоб змінити редакцію, завантаж іншу й встанови поверх.
 
 ОНОВЛЕННЯ
-Під час запуску гри мод сам перевіряє на GitHub, чи вийшла новіша версія, тихо
-завантажує її й встановлює під час наступного запуску гри.
+Під час запуску гри мод сам перевіряє на GitHub, чи вийшла новіша версія, і
+одразу її встановлює (пару секунд), ще до того, як гра завантажиться.
 "Налаштування" -> "Оновлення": вимкнути перевірку або перевірити зараз.
 Довідник оновлюється окремо, просто з вікі.
 

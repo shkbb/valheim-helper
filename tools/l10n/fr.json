@@ -1397,5 +1397,9 @@
 "1396": "<color=#c0c0c0>Une nouvelle version se télécharge automatiquement et s'installe au prochain lancement du jeu. Le guide se met à jour séparément, directement depuis le wiki.</color>",
 "1397": "Autre édition",
 "1398": "<color=#c0c0c0>«Légale» : carte, guide, caméra, statistiques, liste des succès. «Assistant» : inclut aussi les coffres, fourneaux, torches, la fabrication depuis les coffres. «Complète» : inclut aussi les codes de triche. Pour changer d'édition, téléchargez son archive et installez-la par-dessus.</color>",
-"1399": "Ouvrir la page des versions"
+"1399": "Ouvrir la page des versions",
+"1400": "La version {0} a été installée au lancement du jeu.",
+"1401": "Valheim Helper a été mis à jour vers la version {0}.",
+"1402": "<color=#c0c0c0>Les nouvelles versions sont sur la page Nexus Mods du mod (et dans les gestionnaires de mods).</color>",
+"1403": "<color=#c0c0c0>Une nouvelle version s'installe automatiquement au lancement du jeu. Le guide se met à jour séparément, directement depuis le wiki.</color>"
 }

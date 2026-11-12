@@ -9,8 +9,9 @@ using UnityEngine;
 
 namespace ValheimHelper
 {
-    // Keeps the mod up to date from its GitHub releases. At start (when "Перевіряти оновлення" is on) or by hand, a
-    // background thread asks GitHub for the latest release; if its version is newer than this build, the update archive
+    // Keeps the mod up to date from its GitHub releases. Normally the boot DLL does it before the game starts
+    // (Boot\Entrypoint.cs), so the new version runs at once. This class covers the rest: the button, and the start
+    // check when the boot DLL could not reach GitHub or is an old one. Then a background thread asks GitHub for the latest release; if its version is newer than this build, the update archive
     // (ValheimHelper-updates.zip: a folder per edition, full/ helper/ legal/, with the DLLs and languages, not the guide,
     // which updates itself) is downloaded and this edition's folder
     // is unpacked into ValheimHelper\update\files, and update\ready is written. The files are put in place
@@ -46,6 +47,25 @@ namespace ValheimHelper
             if (Running || (!byHand && !AutoCheck))
             {
                 return;
+            }
+            if (!byHand)
+            {
+                // the boot DLL already updated the mod (or found it up to date) before the game started
+                string updated = Environment.GetEnvironmentVariable("VALHEIMHELPER_UPDATED");
+                if (!string.IsNullOrEmpty(updated))
+                {
+                    Status = Lang.F("Версію {0} встановлено під час запуску гри.", BuildInfo.VersionText);
+                    s_announce = Lang.F("Valheim Helper оновлено до версії {0}.", BuildInfo.VersionText);
+                    Log.Info("Updated to " + BuildInfo.VersionText + " at start");
+                }
+                if (Environment.GetEnvironmentVariable("VALHEIMHELPER_BOOT_CHECKED") == "1")
+                {
+                    if (string.IsNullOrEmpty(updated))
+                    {
+                        Status = Lang.F("Встановлено найновішу версію ({0}).", BuildInfo.VersionText);
+                    }
+                    return;
+                }
             }
             Running = true;
             Status = Lang.T("Перевіряю оновлення…");

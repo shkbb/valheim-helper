@@ -28,9 +28,12 @@ $fullDll = Build-Edition 'full'
 
 # The boot DLL Doorstop loads first: it puts a downloaded update in place, then starts the mod (Boot\Entrypoint.cs)
 $bootOut = Join-Path $root 'Boot\bin\Release\boot'
-dotnet build (Join-Path $root 'Boot\Boot.csproj') -c Release -nologo -o $bootOut
+dotnet build (Join-Path $root 'Boot\Boot.csproj') -c Release -nologo "-p:Distribution=$Distribution" -o $bootOut | Out-Host
 if ($LASTEXITCODE -ne 0) { throw 'Build failed: boot' }
-$bootDll = Join-Path $bootOut 'ValheimHelper.Boot.dll'
+# the boot DLL's file name carries its generation (Boot.csproj BootGeneration); doorstop_config.ini names the same file
+$bootDll = Get-ChildItem $bootOut -Filter 'ValheimHelper.Boot.*.dll' | Sort-Object Name | Select-Object -Last 1 -ExpandProperty FullName
+$iniTarget = (Select-String -Path (Join-Path $root 'installer\doorstop_config.ini') -Pattern '^target_assembly=ValheimHelper\\(.+)$').Matches[0].Groups[1].Value
+if ($iniTarget -ne (Split-Path $bootDll -Leaf)) { throw "doorstop_config.ini starts $iniTarget, the boot DLL is $(Split-Path $bootDll -Leaf)" }
 
 # Storage sorting rules are checked on scenarios before anything is packaged
 if (-not $SkipTests) {
@@ -49,6 +52,8 @@ Copy-Item (Join-Path $pack 'winhttp.dll') $gameDir
 Copy-Item (Join-Path $root 'installer\doorstop_config.ini') $gameDir
 Copy-Item $fullDll $modDir
 Copy-Item $bootDll $modDir
+# the boot DLL reads the edition from here to take the right folder of the update archive
+Set-Content -Path (Join-Path $modDir 'edition.txt') -Value 'full' -Encoding ascii -NoNewline
 # Menu languages other than Ukrainian and English: ValheimHelper\lang\<code>.json (tools\l10n\gen_langs.py)
 $langSource = Join-Path $root 'ValheimHelper\lang'
 if (Test-Path $langSource) {
@@ -131,6 +136,7 @@ foreach ($edition in $Editions) {
     if (Test-Path $editionDist) { Remove-Item $editionDist -Recurse -Force }
     Copy-Item $dist $editionDist -Recurse
     Copy-Item $dll (Join-Path $editionDist 'game\ValheimHelper\ValheimHelper.dll') -Force
+    Set-Content -Path (Join-Path $editionDist 'game\ValheimHelper\edition.txt') -Value $edition -Encoding ascii -NoNewline
     Zip-Folder $editionDist (Join-Path $distRoot ('ValheimHelper-' + $edition + '.zip'))
     Stage-Update $editionDist $edition
 }

@@ -1397,5 +1397,9 @@
 "<color=#c0c0c0>Нова версія завантажується сама й встановлюється під час наступного запуску гри. Довідник оновлюється окремо, просто з вікі.</color>": "<color=#c0c0c0>Une nouvelle version se télécharge automatiquement et s'installe au prochain lancement du jeu. Le guide se met à jour séparément, directement depuis le wiki.</color>",
 "Інша редакція": "Autre édition",
 "<color=#c0c0c0>«Легальна» — карта, довідник, камера, статистика, список досягнень. «Помічник» — ще й скрині, печі, факели, крафт зі скринь. «Повна» — ще й чити. Щоб змінити редакцію, завантаж її архів і встанови поверх.</color>": "<color=#c0c0c0>«Légale» : carte, guide, caméra, statistiques, liste des succès. «Assistant» : inclut aussi les coffres, fourneaux, torches, la fabrication depuis les coffres. «Complète» : inclut aussi les codes de triche. Pour changer d'édition, téléchargez son archive et installez-la par-dessus.</color>",
-"Відкрити сторінку випусків": "Ouvrir la page des versions"
+"Відкрити сторінку випусків": "Ouvrir la page des versions",
+"Версію {0} встановлено під час запуску гри.": "La version {0} a été installée au lancement du jeu.",
+"Valheim Helper оновлено до версії {0}.": "Valheim Helper a été mis à jour vers la version {0}.",
+"<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>": "<color=#c0c0c0>Les nouvelles versions sont sur la page Nexus Mods du mod (et dans les gestionnaires de mods).</color>",
+"<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>": "<color=#c0c0c0>Une nouvelle version s'installe automatiquement au lancement du jeu. Le guide se met à jour séparément, directement depuis le wiki.</color>"
 }

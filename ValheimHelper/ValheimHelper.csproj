@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ValheimHelper</AssemblyName>
     <!-- The mod's version: the updater compares it with the latest GitHub release (tag v<Version>). -->
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <RootNamespace>ValheimHelper</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
@@ -70,6 +70,11 @@
     <Reference Include="assembly_postprocessing"><HintPath>$(ManagedDir)\assembly_postprocessing.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="SoftReferenceableAssets"><HintPath>$(ManagedDir)\SoftReferenceableAssets.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Splatform"><HintPath>$(ManagedDir)\Splatform.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- shared with the boot DLL: which boot DLL Doorstop starts -->
+  <ItemGroup>
+    <Compile Include="..\Boot\BootFiles.cs" Link="Loader\BootFiles.cs" />
   </ItemGroup>
 
 </Project>

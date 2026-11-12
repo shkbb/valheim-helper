@@ -31,6 +31,15 @@ namespace ValheimHelper
                 Dir = Path.GetDirectoryName(typeof(Loader).Assembly.Location);
                 Log.Init(Path.Combine(Dir, "ValheimHelper.log"));
                 Log.Info("Doorstop entrypoint reached");
+                try
+                {
+                    // an update put in place by an older boot DLL may have brought a newer one: Doorstop starts that next time
+                    BootFiles.PointDoorstopAtNewest(Dir, null, Log.Info);
+                }
+                catch (Exception e)
+                {
+                    Log.Warn("Boot DLL not switched: " + e.Message);
+                }
 
                 AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;

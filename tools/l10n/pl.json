@@ -1011,6 +1011,7 @@
 "1009": "Wszystkie artykuły",
 "1010": "Brak wersji rosyjskiej",
 "1011": "Przewodnika po rosyjsku nie ma i nie będzie. Jeśli chcesz pomóc, wesprzyj Siły Obrony Ukrainy oraz ludzi poszkodowanych przez wojnę:",
+"1012": "Wróć żywy (Come Back Alive)",
 "1013": "pomoc dla wojska",
 "1014": "Fundacja Serhija Prytuły",
 "1015": "pomoc dla wojska i cywilów",
@@ -1397,5 +1398,9 @@
 "1396": "<color=#c0c0c0>Nowa wersja pobiera się automatycznie i instaluje przy następnym uruchomieniu gry. Przewodnik aktualizuje się osobno, bezpośrednio z wiki.</color>",
 "1397": "Inna edycja",
 "1398": "<color=#c0c0c0>«Legalna»: mapa, przewodnik, kamera, statystyki, lista osiągnięć. «Pomocnik»: także skrzynie, piece, pochodnie, wytwarzanie ze skrzyń. «Pełna»: także cheaty. Aby zmienić edycję, pobierz jej archiwum i zainstaluj na obecną.</color>",
-"1399": "Otwórz stronę wydań"
+"1399": "Otwórz stronę wydań",
+"1400": "Wersja {0} została zainstalowana podczas uruchamiania gry.",
+"1401": "Valheim Helper został zaktualizowany do wersji {0}.",
+"1402": "<color=#c0c0c0>Nowe wersje są na stronie moda w Nexus Mods (i w menedżerach modów).</color>",
+"1403": "<color=#c0c0c0>Nowa wersja instaluje się sama podczas uruchamiania gry. Przewodnik aktualizuje się osobno, bezpośrednio z wiki.</color>"
 }

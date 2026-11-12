@@ -1397,5 +1397,9 @@
 "1396": "<color=#c0c0c0>Uma nova versão é baixada automaticamente e instalada na próxima vez que o jogo iniciar. O guia é atualizado separadamente, direto da wiki.</color>",
 "1397": "Outra edição",
 "1398": "<color=#c0c0c0>«Legal»: mapa, guia, câmera, estatísticas, lista de conquistas. «Assistente»: também baús, fundidores, tochas e criação a partir de baús. «Completa»: também trapaças. Para alterar a edição, baixe o arquivo correspondente e instale por cima deste.</color>",
-"1399": "Abrir a página de lançamentos"
+"1399": "Abrir a página de lançamentos",
+"1400": "A versão {0} foi instalada ao iniciar o jogo.",
+"1401": "O Valheim Helper foi atualizado para a versão {0}.",
+"1402": "<color=#c0c0c0>Novas versões estão na página do mod no Nexus Mods (e nos gerenciadores de mods).</color>",
+"1403": "<color=#c0c0c0>A nova versão é instalada automaticamente ao iniciar o jogo. O guia é atualizado separadamente, direto da wiki.</color>"
 }

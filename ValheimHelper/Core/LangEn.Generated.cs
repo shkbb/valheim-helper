@@ -1407,6 +1407,10 @@ namespace ValheimHelper
             table["Інша редакція"] = "Another edition";
             table["<color=#c0c0c0>«Легальна» — карта, довідник, камера, статистика, список досягнень. «Помічник» — ще й скрині, печі, факели, крафт зі скринь. «Повна» — ще й чити. Щоб змінити редакцію, завантаж її архів і встанови поверх.</color>"] = "<color=#c0c0c0>«Legal»: map, guide, camera, statistics, achievement list. «Helper»: also chests, smelters, torches, crafting from chests. «Full»: also cheats. To change the edition, download its archive and install it over this one.</color>";
             table["Відкрити сторінку випусків"] = "Open the releases page";
+            table["Версію {0} встановлено під час запуску гри."] = "Version {0} was installed when the game started.";
+            table["Valheim Helper оновлено до версії {0}."] = "Valheim Helper has been updated to version {0}.";
+            table["<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>"] = "<color=#c0c0c0>New versions are on the mod's Nexus Mods page (and in mod managers).</color>";
+            table["<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>"] = "<color=#c0c0c0>A new version installs itself when the game starts. The guide updates separately, straight from the wiki.</color>";
         }
     }
 }

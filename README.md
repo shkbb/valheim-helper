@@ -53,9 +53,10 @@ ignore cheat settings left by the Full edition and do not accept items sent by a
 To switch to another edition, install its archive over the current one.
 
 ## Updates
-The mod updates itself. When the game starts it asks GitHub whether a newer version is out; if so, it downloads the
-update of your edition in the background and installs it the next time you start the game. You can turn the check off
-or run it by hand in **Settings → Updates**. The wiki guide updates separately, straight from the wiki.
+The mod updates itself. When you start the game, before the game loads, it asks GitHub whether a newer version is
+out; if so, it downloads the update of your edition (a couple of seconds) and the game starts with the new version
+right away. You can turn the check off or run it by hand in **Settings → Updates** (an update found by hand installs at
+the next start). The wiki guide updates separately, straight from the wiki.
 
 ## Building
 Requires the .NET SDK and an installed Valheim (the game's assemblies are referenced in `ValheimHelper/ValheimHelper.csproj`).

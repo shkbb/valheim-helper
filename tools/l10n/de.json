@@ -1011,6 +1011,7 @@
 "1009": "Alle Artikel",
 "1010": "Keine russische Version verfügbar",
 "1011": "Es gibt keine russische Version des Guides und es wird auch keine geben. Wenn du helfen möchtest, unterstütze die Streitkräfte der Ukraine und die vom Krieg betroffenen Menschen:",
+"1012": "Komm lebend zurück (Come Back Alive)",
 "1013": "Hilfe für die Armee",
 "1014": "Serhiy Prytula Foundation",
 "1015": "Hilfe für Armee und Zivilbevölkerung",
@@ -1397,5 +1398,9 @@
 "1396": "<color=#c0c0c0>Eine neue Version wird automatisch heruntergeladen und beim nächsten Spielstart installiert. Der Guide wird separat direkt aus dem Wiki aktualisiert.</color>",
 "1397": "Andere Edition",
 "1398": "<color=#c0c0c0>«Legal»: Karte, Guide, Kamera, Statistiken, Errungenschaftsliste. «Helfer»: auch Truhen, Schmelzöfen, Fackeln, Herstellen aus Truhen. «Voll»: auch Cheats. Um die Edition zu wechseln, lade ihr Archiv herunter und installiere es darüber.</color>",
-"1399": "Release-Seite öffnen"
+"1399": "Release-Seite öffnen",
+"1400": "Version {0} wurde beim Spielstart installiert.",
+"1401": "Valheim Helper wurde auf Version {0} aktualisiert.",
+"1402": "<color=#c0c0c0>Neue Versionen gibt es auf der Nexus-Mods-Seite der Mod (und in Mod-Managern).</color>",
+"1403": "<color=#c0c0c0>Eine neue Version installiert sich beim Spielstart von selbst. Der Guide aktualisiert sich separat, direkt aus dem Wiki.</color>"
 }
