@@ -11,8 +11,9 @@ namespace ValheimHelper
 {
     // Keeps the mod up to date from its GitHub releases. At start (when "Перевіряти оновлення" is on) or by hand, a
     // background thread asks GitHub for the latest release; if its version is newer than this build, the update archive
-    // of this edition (ValheimHelper-<edition>-update.zip: the DLLs and languages, not the guide, which updates itself)
-    // is downloaded and unpacked into ValheimHelper\update\files, and update\ready is written. The files are put in place
+    // (ValheimHelper-updates.zip: a folder per edition, full/ helper/ legal/, with the DLLs and languages, not the guide,
+    // which updates itself) is downloaded and this edition's folder
+    // is unpacked into ValheimHelper\update\files, and update\ready is written. The files are put in place
     // by ValheimHelper.Boot.dll at the next start of the game, before the mod's own DLL is loaded.
     internal static class Updater
     {
@@ -75,7 +76,7 @@ namespace ValheimHelper
                     Status = Lang.F("Версію {0} уже завантажено: вона встановиться, коли перезапустиш гру.", latest.ToString(3));
                     return;
                 }
-                string wanted = "ValheimHelper-" + BuildInfo.Edition + "-update.zip";
+                const string wanted = "ValheimHelper-updates.zip";
                 string url = null;
                 long size = 0;
                 foreach (JToken asset in release["assets"] ?? new JArray())
@@ -124,15 +125,19 @@ namespace ValheimHelper
             string files = Path.Combine(dir, "files");
             Directory.CreateDirectory(files);
             string root = Path.GetFullPath(files) + Path.DirectorySeparatorChar;
+            string prefix = BuildInfo.Edition + "/";
+            int taken = 0;
             using (ZipArchive zip = new ZipArchive(new MemoryStream(archive), ZipArchiveMode.Read))
             {
                 foreach (ZipArchiveEntry entry in zip.Entries)
                 {
-                    if (string.IsNullOrEmpty(entry.Name))
+                    // only this edition's folder, without the folder itself in the path
+                    string name = entry.FullName.Replace('\\', '/');
+                    if (string.IsNullOrEmpty(entry.Name) || !name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                     {
                         continue;
                     }
-                    string target = Path.GetFullPath(Path.Combine(files, entry.FullName));
+                    string target = Path.GetFullPath(Path.Combine(files, name.Substring(prefix.Length)));
                     // nothing may land outside the update folder
                     if (!target.StartsWith(root, StringComparison.OrdinalIgnoreCase))
                     {
@@ -144,7 +149,12 @@ namespace ValheimHelper
                     {
                         source.CopyTo(output);
                     }
+                    taken++;
                 }
+            }
+            if (taken == 0)
+            {
+                throw new InvalidDataException("the update has nothing for the edition " + BuildInfo.Edition);
             }
             // written last: the boot DLL only acts on a complete update
             File.WriteAllText(Path.Combine(dir, "ready"), version);

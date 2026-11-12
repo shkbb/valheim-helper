@@ -1,7 +1,8 @@
-# Builds ValheimHelper.dll in three editions and assembles the packages (each with an install zip and an update zip):
-#   dist\ValheimHelper         (ValheimHelper-full.zip, -full-update.zip)      full: everything, cheats included (installed here)
-#   dist\ValheimHelper-helper  (ValheimHelper-helper.zip, -helper-update.zip)  helper: map, guide, camera, statistics + base helper
-#   dist\ValheimHelper-legal   (ValheimHelper-legal.zip, -legal-update.zip)    legal: map, guide, camera, statistics, achievement list
+# Builds ValheimHelper.dll in three editions and assembles the packages:
+#   dist\ValheimHelper         (ValheimHelper-full.zip)    full: everything, cheats included (installed here)
+#   dist\ValheimHelper-helper  (ValheimHelper-helper.zip)  helper: map, guide, camera, statistics + base helper
+#   dist\ValheimHelper-legal   (ValheimHelper-legal.zip)   legal: map, guide, camera, statistics, achievement list
+#   dist\ValheimHelper-updates.zip   what the mod's updater downloads: a folder per edition (full, helper, legal)
 # The code of a higher edition is not compiled into a lower one (ValheimHelper.csproj, property Edition).
 # ASCII-only on purpose: Windows PowerShell 5.1 misreads non-ASCII in scripts saved without BOM.
 # -SkipTests: package without the sort/wiki tests (only while a wiki pack is being refreshed and its cache is ahead of it).
@@ -103,19 +104,21 @@ function Zip-Folder([string]$folder, [string]$zip) {
     Write-Host "OK: $zip"
 }
 
-# The update archive of an edition: what lies in game\ValheimHelper (DLLs, languages), at the root of the zip, without
-# the guide's packs (the guide updates itself from the wiki). The mod's updater downloads it (Core\Updater.cs).
-function Zip-Update([string]$editionDist, [string]$edition) {
-    $zip = Join-Path $root ('dist\ValheimHelper-' + $edition + '-update.zip')
-    if (Test-Path $zip) { Remove-Item $zip -Force }
-    $items = Get-ChildItem (Join-Path $editionDist 'game\ValheimHelper') | Where-Object { $_.Name -ne 'wiki' }
-    Compress-Archive -Path ($items | ForEach-Object { $_.FullName }) -DestinationPath $zip
-    Write-Host "OK: $zip"
+# The updates: what lies in game\ValheimHelper of each edition (DLLs, languages), without the guide's packs (the guide
+# updates itself from the wiki), in a folder named after the edition; all three go into one zip that the mod's updater
+# downloads and takes its own edition's folder from (Core\Updater.cs).
+$updates = Join-Path $root 'dist\updates'
+if (Test-Path $updates) { Remove-Item $updates -Recurse -Force }
+function Stage-Update([string]$editionDist, [string]$edition) {
+    $target = Join-Path $updates $edition
+    New-Item -ItemType Directory -Force $target | Out-Null
+    Get-ChildItem (Join-Path $editionDist 'game\ValheimHelper') | Where-Object { $_.Name -ne 'wiki' } |
+        ForEach-Object { Copy-Item $_.FullName $target -Recurse }
 }
 
 if ($Editions -contains 'full') {
     Zip-Folder $dist (Join-Path $root 'dist\ValheimHelper-full.zip')
-    Zip-Update $dist 'full'
+    Stage-Update $dist 'full'
 }
 # The other editions: the same package with their own DLL
 foreach ($edition in $Editions) {
@@ -126,5 +129,9 @@ foreach ($edition in $Editions) {
     Copy-Item $dist $editionDist -Recurse
     Copy-Item $dll (Join-Path $editionDist 'game\ValheimHelper\ValheimHelper.dll') -Force
     Zip-Folder $editionDist (Join-Path $root ('dist\ValheimHelper-' + $edition + '.zip'))
-    Zip-Update $editionDist $edition
+    Stage-Update $editionDist $edition
 }
+$updatesZip = Join-Path $root 'dist\ValheimHelper-updates.zip'
+if (Test-Path $updatesZip) { Remove-Item $updatesZip -Force }
+Compress-Archive -Path (Join-Path $updates '*') -DestinationPath $updatesZip
+Write-Host "OK: $updatesZip"

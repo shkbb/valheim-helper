@@ -46,7 +46,7 @@
 ## Встановлення
 1. Відкрийте [Releases](../../releases) і завантажте **один** архів — редакцію, яку хочете:
    `ValheimHelper-legal.zip`, `ValheimHelper-helper.zip` або `ValheimHelper-full.zip` (див. таблицю вище).
-   Файли `*-update.zip` — для вбудованого оновлювача мода, вам вони не потрібні.
+   `ValheimHelper-updates.zip` — для вбудованого оновлювача мода, вам він не потрібен.
 2. Закрийте гру, розпакуйте архів і запустіть `install.bat`. Він сам знайде Valheim у Steam.
 3. Запускайте гру як завжди. Меню: F7 або Insert. `uninstall.bat` прибирає мод.
 

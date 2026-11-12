@@ -1,11 +1,11 @@
 # Publishes a release of Valheim Helper on GitHub (shkbb/valheim-helper) with gh:
 #   tag v<Version> (the <Version> of ValheimHelper\ValheimHelper.csproj, raise it before a new release),
-#   assets ValheimHelper-full.zip, -helper.zip, -legal.zip (to install) and -full-update.zip, -helper-update.zip,
-#   -legal-update.zip (what the mod's updater downloads by itself).
+#   assets ValheimHelper-legal.zip, -helper.zip, -full.zip (to install) and ValheimHelper-updates.zip (what the mod's
+#   updater downloads by itself).
 #   .\release.ps1 -Notes "What changed"        build everything, then publish
 #   .\release.ps1 -SkipBuild -Notes "..."      publish what dist\ already holds
 # ASCII-only on purpose: Windows PowerShell 5.1 misreads non-ASCII in scripts saved without BOM.
-param([switch]$SkipBuild, [string]$Notes = '', [switch]$Draft)
+param([switch]$SkipBuild, [string]$Notes = '', [switch]$Draft, [switch]$Prerelease)
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $repo = 'shkbb/valheim-helper'
@@ -24,12 +24,10 @@ if (-not $SkipBuild) {
 }
 
 $assets = @()
-foreach ($edition in 'full', 'helper', 'legal') {
-    foreach ($suffix in '', '-update') {
-        $file = Join-Path $root ('dist\ValheimHelper-' + $edition + $suffix + '.zip')
-        if (-not (Test-Path $file)) { throw "Missing $file" }
-        $assets += $file
-    }
+foreach ($name in 'legal', 'helper', 'full', 'updates') {
+    $file = Join-Path $root ('dist\ValheimHelper-' + $name + '.zip')
+    if (-not (Test-Path $file)) { throw "Missing $file" }
+    $assets += $file
 }
 
 if (-not $Notes) { $Notes = "Valheim Helper $version" }
@@ -38,9 +36,10 @@ $text = $Notes + "`n`n" +
     "- ValheimHelper-legal.zip: map, guide, camera, statistics, achievement list, no advantage in the game`n" +
     "- ValheimHelper-helper.zip: legal + chests, smelters, torches, crafting from chests`n" +
     "- ValheimHelper-full.zip: everything, cheats included`n" +
-    "The *-update.zip files are for the mod's own updater; you don't need them."
+    "ValheimHelper-updates.zip is for the mod's own updater; you don't need it."
 $args = @('release', 'create', $tag, '-R', $repo, '--title', "Valheim Helper $version", '--notes', $text) + $assets
 if ($Draft) { $args += '--draft' }
+if ($Prerelease) { $args += '--prerelease' }
 & gh @args
 if ($LASTEXITCODE -ne 0) { throw 'gh release create failed' }
 Write-Host "Published $tag"

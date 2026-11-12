@@ -46,7 +46,7 @@ ignore cheat settings left by the Full edition and do not accept items sent by a
 ## Installation
 1. Go to [Releases](../../releases) and download **one** archive, the edition you want:
    `ValheimHelper-legal.zip`, `ValheimHelper-helper.zip` or `ValheimHelper-full.zip` (see the table above).
-   The `*-update.zip` files are for the mod's own updater, you don't need them.
+   `ValheimHelper-updates.zip` is for the mod's own updater, you don't need it.
 2. Close the game, unpack the archive and run `install.bat`. It finds Valheim in Steam by itself.
 3. Start the game as usual. Menu: F7 or Insert. `uninstall.bat` removes the mod.
 
