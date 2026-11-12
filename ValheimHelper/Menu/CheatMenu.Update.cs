@@ -10,6 +10,9 @@ namespace ValheimHelper
             GUILayout.BeginVertical(HelperSkin.Section);
             GUILayout.Label(Lang.T("Версія"), HelperSkin.Header);
             GUILayout.Label(Lang.F("Valheim Helper {0}, редакція «{1}»", BuildInfo.VersionText, BuildInfo.EditionName));
+#if NEXUS
+            GUILayout.Label(Lang.T("<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>"));
+#else
             Updater.AutoCheck = GUILayout.Toggle(Updater.AutoCheck, Lang.T(" Перевіряти оновлення під час запуску гри"));
             GUI.enabled = !Updater.Running;
             if (GUILayout.Button(Lang.T("Перевірити зараз")))
@@ -23,6 +26,7 @@ namespace ValheimHelper
             }
             GUILayout.Label(Lang.T("<color=#c0c0c0>Нова версія завантажується сама й встановлюється під час наступного запуску гри. " +
                 "Довідник оновлюється окремо, просто з вікі.</color>"));
+#endif
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical(HelperSkin.Section);

@@ -238,6 +238,24 @@ namespace ValheimHelper
 
         private static Font FindFont()
         {
+            // The game's Noto Serif has no Chinese characters: the menu in Chinese takes a system font that has them
+            if (Lang.Code == "zh")
+            {
+                try
+                {
+                    Font cjk = Font.CreateDynamicFontFromOSFont(new[] { "Microsoft YaHei UI", "Microsoft YaHei", "SimHei", "SimSun",
+                        "Noto Sans CJK SC", "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Arial Unicode MS" }, 15);
+                    if (cjk != null)
+                    {
+                        Log.Info("UI font: system CJK");
+                        return cjk;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
             try
             {
                 Font best = null;

@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ValheimHelper</AssemblyName>
     <!-- The mod's version: the updater compares it with the latest GitHub release (tag v<Version>). -->
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <RootNamespace>ValheimHelper</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
@@ -24,6 +24,10 @@
        full = everything, cheats included. The code of a higher edition is not compiled into a lower one at all. -->
   <PropertyGroup>
     <Edition Condition="'$(Edition)' == ''">full</Edition>
+  </PropertyGroup>
+  <!-- Distribution (dotnet build -p:Distribution=github|nexus): the Nexus Mods build has no updater (the site's rules) -->
+  <PropertyGroup Condition="'$(Distribution)' == 'nexus'">
+    <DefineConstants>$(DefineConstants);NEXUS</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Edition)' == 'full'">
     <DefineConstants>$(DefineConstants);EDITION_FULL;EDITION_HELPER</DefineConstants>

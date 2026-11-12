@@ -18,8 +18,14 @@ namespace ValheimHelper
     internal static class Updater
     {
         internal const string Repository = "shkbb/valheim-helper";
+#if NEXUS
+        internal const string ReleasesPage = "https://www.nexusmods.com/valheim/search/?gsearch=Valheim%20Helper";
+#else
         internal const string ReleasesPage = "https://github.com/" + Repository + "/releases";
+#endif
+#if !NEXUS
         private const string LatestApi = "https://api.github.com/repos/" + Repository + "/releases/latest";
+#endif
         private const int TimeoutMs = 30000;
         private const long MaxArchiveBytes = 50L * 1024 * 1024;
 
@@ -33,6 +39,10 @@ namespace ValheimHelper
 
         internal static void Start(bool byHand)
         {
+#if NEXUS
+            // the Nexus Mods build does not update itself: Nexus and the mod managers tell about new versions
+            return;
+#else
             if (Running || (!byHand && !AutoCheck))
             {
                 return;
@@ -41,6 +51,7 @@ namespace ValheimHelper
             Status = Lang.T("Перевіряю оновлення…");
             Thread thread = new Thread(() => Run(byHand)) { IsBackground = true, Name = "ValheimHelper update" };
             thread.Start();
+#endif
         }
 
         // Called every frame from the main thread: shows what the background thread found.
@@ -54,6 +65,7 @@ namespace ValheimHelper
             }
         }
 
+#if !NEXUS
         private static void Run(bool byHand)
         {
             try
@@ -187,6 +199,7 @@ namespace ValheimHelper
         }
 
         // Opens the releases page in the browser: there the player picks another edition or the full package.
+#endif
         internal static void OpenReleases()
         {
             Application.OpenURL(ReleasesPage);

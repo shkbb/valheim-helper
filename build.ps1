@@ -7,16 +7,19 @@
 # ASCII-only on purpose: Windows PowerShell 5.1 misreads non-ASCII in scripts saved without BOM.
 # -SkipTests: package without the sort/wiki tests (only while a wiki pack is being refreshed and its cache is ahead of it).
 # -Editions full,helper,legal: which packages to make (full is always built first, it is the base of the others).
-param([switch]$SkipTests, [string[]]$Editions = @('full', 'helper', 'legal'))
+# -Distribution nexus: the Nexus Mods build, without the updater (the site's rules), into dist\nexus, no updates zip.
+param([switch]$SkipTests, [string[]]$Editions = @('full', 'helper', 'legal'), [ValidateSet('github', 'nexus')][string]$Distribution = 'github')
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $pack = Join-Path $root 'deps\BepInExPack\BepInExPack_Valheim'
 $project = Join-Path $root 'ValheimHelper\ValheimHelper.csproj'
+$distRoot = if ($Distribution -eq 'nexus') { Join-Path $root 'dist\nexus' } else { Join-Path $root 'dist' }
+New-Item -ItemType Directory -Force $distRoot | Out-Null
 
 function Build-Edition([string]$edition) {
-    $out = Join-Path $root ('ValheimHelper\bin\Release\' + $edition)
+    $out = Join-Path $root ('ValheimHelper\bin\Release\' + $Distribution + '-' + $edition)
     # the build's output goes to the screen, not into what the function returns
-    dotnet build $project -c Release -nologo "-p:Edition=$edition" -o $out | Out-Host
+    dotnet build $project -c Release -nologo "-p:Edition=$edition" "-p:Distribution=$Distribution" -o $out | Out-Host
     if ($LASTEXITCODE -ne 0) { throw "Build failed: $edition" }
     return (Join-Path $out 'ValheimHelper.dll')
 }
@@ -35,7 +38,7 @@ if (-not $SkipTests) {
     if ($LASTEXITCODE -ne 0) { throw 'Sort tests failed' }
 }
 
-$dist = Join-Path $root 'dist\ValheimHelper'
+$dist = Join-Path $distRoot 'ValheimHelper'
 if (Test-Path $dist) { Remove-Item $dist -Recurse -Force }
 $gameDir = Join-Path $dist 'game'
 $modDir = Join-Path $gameDir 'ValheimHelper'
@@ -107,7 +110,7 @@ function Zip-Folder([string]$folder, [string]$zip) {
 # The updates: what lies in game\ValheimHelper of each edition (DLLs, languages), without the guide's packs (the guide
 # updates itself from the wiki), in a folder named after the edition; all three go into one zip that the mod's updater
 # downloads and takes its own edition's folder from (Core\Updater.cs).
-$updates = Join-Path $root 'dist\updates'
+$updates = Join-Path $distRoot 'updates'
 if (Test-Path $updates) { Remove-Item $updates -Recurse -Force }
 function Stage-Update([string]$editionDist, [string]$edition) {
     $target = Join-Path $updates $edition
@@ -117,21 +120,24 @@ function Stage-Update([string]$editionDist, [string]$edition) {
 }
 
 if ($Editions -contains 'full') {
-    Zip-Folder $dist (Join-Path $root 'dist\ValheimHelper-full.zip')
+    Zip-Folder $dist (Join-Path $distRoot 'ValheimHelper-full.zip')
     Stage-Update $dist 'full'
 }
 # The other editions: the same package with their own DLL
 foreach ($edition in $Editions) {
     if ($edition -eq 'full') { continue }
     $dll = Build-Edition $edition
-    $editionDist = Join-Path $root ('dist\ValheimHelper-' + $edition)
+    $editionDist = Join-Path $distRoot ('ValheimHelper-' + $edition)
     if (Test-Path $editionDist) { Remove-Item $editionDist -Recurse -Force }
     Copy-Item $dist $editionDist -Recurse
     Copy-Item $dll (Join-Path $editionDist 'game\ValheimHelper\ValheimHelper.dll') -Force
-    Zip-Folder $editionDist (Join-Path $root ('dist\ValheimHelper-' + $edition + '.zip'))
+    Zip-Folder $editionDist (Join-Path $distRoot ('ValheimHelper-' + $edition + '.zip'))
     Stage-Update $editionDist $edition
 }
-$updatesZip = Join-Path $root 'dist\ValheimHelper-updates.zip'
-if (Test-Path $updatesZip) { Remove-Item $updatesZip -Force }
-Compress-Archive -Path (Join-Path $updates '*') -DestinationPath $updatesZip
-Write-Host "OK: $updatesZip"
+# the Nexus build has no updater, so no updates zip
+if ($Distribution -ne 'nexus') {
+    $updatesZip = Join-Path $distRoot 'ValheimHelper-updates.zip'
+    if (Test-Path $updatesZip) { Remove-Item $updatesZip -Force }
+    Compress-Archive -Path (Join-Path $updates '*') -DestinationPath $updatesZip
+    Write-Host "OK: $updatesZip"
+}
