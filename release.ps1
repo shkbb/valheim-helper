@@ -15,8 +15,12 @@ $version = ($project.Project.PropertyGroup | Where-Object { $_.Version } | Selec
 if (-not $version) { throw 'No <Version> in ValheimHelper.csproj' }
 $tag = 'v' + $version
 
-& gh release view $tag -R $repo *> $null
-if ($LASTEXITCODE -eq 0) { throw "Release $tag already exists: raise <Version> in ValheimHelper.csproj first" }
+# "release not found" on stderr is the expected answer here; Windows PowerShell 5.1 would stop on it under 'Stop'
+$ErrorActionPreference = 'Continue'
+& gh release view $tag -R $repo 2>&1 | Out-Null
+$exists = $LASTEXITCODE -eq 0
+$ErrorActionPreference = 'Stop'
+if ($exists) { throw "Release $tag already exists: raise <Version> in ValheimHelper.csproj first" }
 
 if (-not $SkipBuild) {
     & (Join-Path $root 'build.ps1')
