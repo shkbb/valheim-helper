@@ -44,6 +44,7 @@ namespace ValheimHelper
                 Storage.StorageSettings.Load();
 #endif
                 Perf.PerfSettings.Load();
+                Updater.Start(byHand: false);
                 GameObject go = new GameObject("ValheimHelper");
                 Root = go;
                 UnityEngine.Object.DontDestroyOnLoad(go);

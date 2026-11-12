@@ -44,8 +44,18 @@ ignore cheat settings left by the Full edition and do not accept items sent by a
   wikis in those languages.
 
 ## Installation
-Close the game, unpack the archive of the edition you want from [Releases](../../releases) and run `install.bat`
-(it finds Valheim in Steam by itself). Menu: F7 or Insert. `uninstall.bat` removes the mod.
+1. Go to [Releases](../../releases) and download **one** archive, the edition you want:
+   `ValheimHelper-legal.zip`, `ValheimHelper-helper.zip` or `ValheimHelper-full.zip` (see the table above).
+   The `*-update.zip` files are for the mod's own updater, you don't need them.
+2. Close the game, unpack the archive and run `install.bat`. It finds Valheim in Steam by itself.
+3. Start the game as usual. Menu: F7 or Insert. `uninstall.bat` removes the mod.
+
+To switch to another edition, install its archive over the current one.
+
+## Updates
+The mod updates itself. When the game starts it asks GitHub whether a newer version is out; if so, it downloads the
+update of your edition in the background and installs it the next time you start the game. You can turn the check off
+or run it by hand in **Settings → Updates**. The wiki guide updates separately, straight from the wiki.
 
 ## Building
 Requires the .NET SDK and an installed Valheim (the game's assemblies are referenced in `ValheimHelper/ValheimHelper.csproj`).
@@ -54,5 +64,6 @@ Unpack BepInExPack for Valheim (5.4.2350) into `deps/BepInExPack`: `winhttp.dll`
 ```powershell
 .\build.ps1                       # all three editions, tests, archives in dist\
 .\build.ps1 -Editions full        # one edition
+.\release.ps1 -Notes "What changed"   # build and publish a GitHub release (raise <Version> first)
 dotnet build ValheimHelper\ValheimHelper.csproj -p:Edition=legal   # legal | helper | full
 ```

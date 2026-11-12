@@ -1385,6 +1385,28 @@ namespace ValheimHelper
             table[" · у Steam: {0} з {1}"] = " · in Steam: {0} of {1}";
             table[" · <color=#c0c0c0>Steam не відповідає</color>"] = " · <color=#c0c0c0>Steam does not answer</color>";
             table["<color=#c0c0c0>«Як мова гри» — мова гри, якщо мод її знає, інакше англійська. Мову статей довідника перемикає окрема кнопка вгорі праворуч у «Довідник».</color>"] = "<color=#c0c0c0>«As the game's language» — the game's language if the mod knows it, otherwise English. The language of the guide's articles is switched by its own button at the top right of «Guide».</color>";
+            table["Повна"] = "Full";
+            table["Помічник"] = "Helper";
+            table["Легальна"] = "Legal";
+            table["Перевіряю оновлення…"] = "Checking for updates…";
+            table["Не вдалося прочитати версію випуску «{0}»."] = "Could not read the release version «{0}».";
+            table["Встановлено найновішу версію ({0})."] = "The latest version is installed ({0}).";
+            table["Версію {0} уже завантажено: вона встановиться, коли перезапустиш гру."] = "Version {0} is already downloaded: it will be installed when you restart the game.";
+            table["Вийшла версія {0}, але в ній немає оновлення для цієї редакції. Завантаж її вручну."] = "Version {0} is out, but it has no update for this edition. Download it by hand.";
+            table["Завантажую версію {0}…"] = "Downloading version {0}…";
+            table["Оновлення завантажилось не повністю. Спробую наступного разу."] = "The update did not download completely. I'll try again next time.";
+            table["Версію {0} завантажено: вона встановиться, коли перезапустиш гру."] = "Version {0} is downloaded: it will be installed when you restart the game.";
+            table["Valheim Helper {0} завантажено. Він встановиться під час наступного запуску гри."] = "Valheim Helper {0} is downloaded. It will be installed the next time you start the game.";
+            table["Не вдалося перевірити оновлення: немає зв'язку з GitHub."] = "Could not check for updates: no connection to GitHub.";
+            table["Оновлення"] = "Updates";
+            table["Версія"] = "Version";
+            table["Valheim Helper {0}, редакція «{1}»"] = "Valheim Helper {0}, «{1}» edition";
+            table[" Перевіряти оновлення під час запуску гри"] = " Check for updates when the game starts";
+            table["Перевірити зараз"] = "Check now";
+            table["<color=#c0c0c0>Нова версія завантажується сама й встановлюється під час наступного запуску гри. Довідник оновлюється окремо, просто з вікі.</color>"] = "<color=#c0c0c0>A new version downloads by itself and is installed the next time the game starts. The guide updates separately, straight from the wiki.</color>";
+            table["Інша редакція"] = "Another edition";
+            table["<color=#c0c0c0>«Легальна» — карта, довідник, камера, статистика, список досягнень. «Помічник» — ще й скрині, печі, факели, крафт зі скринь. «Повна» — ще й чити. Щоб змінити редакцію, завантаж її архів і встанови поверх.</color>"] = "<color=#c0c0c0>«Legal»: map, guide, camera, statistics, achievement list. «Helper»: also chests, smelters, torches, crafting from chests. «Full»: also cheats. To change the edition, download its archive and install it over this one.</color>";
+            table["Відкрити сторінку випусків"] = "Open the releases page";
         }
     }
 }

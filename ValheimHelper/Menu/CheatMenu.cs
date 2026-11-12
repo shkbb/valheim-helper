@@ -132,6 +132,7 @@ namespace ValheimHelper
         {
             try
             {
+                Updater.Tick();
                 bool escapeHandled = Patches.EscapeClosesMenu.TryHandle();
                 if (!escapeHandled && Binds.CapturingId == null && Binds.MenuKeyPressed())
                 {
@@ -289,7 +290,8 @@ namespace ValheimHelper
                     new MenuPage(Lang.T("Досягнення"), DrawAchievementsTab, "achievements"),
                     new MenuPage(Lang.T("Зображення"), DrawImageTab),
                     new MenuPage(Lang.T("Швидкодія"), DrawPerfTab),
-                    new MenuPage(Lang.T("Мова"), DrawLanguageTab)
+                    new MenuPage(Lang.T("Мова"), DrawLanguageTab),
+                    new MenuPage(Lang.T("Оновлення"), DrawUpdateTab)
 #if EDITION_FULL
                     , new MenuPage(Lang.T("Скидання"), DrawResetSettings)
 #endif

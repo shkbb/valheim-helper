@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The first thing Doorstop loads (doorstop_config.ini → ValheimHelper\ValheimHelper.Boot.dll). It puts a downloaded
+       update in place while the mod's own DLL is not loaded yet, then loads that DLL and starts it. No game references. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ValheimHelper.Boot</AssemblyName>
+    <RootNamespace>ValheimHelper.Boot</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <DebugType>none</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>

@@ -123,6 +123,7 @@ namespace ValheimHelper
                 case "uilang": Lang.Chosen = value; break;
                 case "wikipage": State.WikiPage = value; break;
                 case "wikiupdate": State.WikiAutoUpdate = value != "0"; break;
+                case "autoupdate": Updater.AutoCheck = value != "0"; break;
                 case "effectduration": State.EffectDuration = Mathf.RoundToInt(Number(value, 0f, 100f)); break;
             }
         }
@@ -241,6 +242,7 @@ namespace ValheimHelper
                 Num("brightness", State.ImageBrightness),
                 Num("gamma", State.ImageGamma),
                 Num("glow", State.ImageGlow),
+                Bit("autoupdate", Updater.AutoCheck),
                 "menusection=" + State.MenuSection.ToString(CultureInfo.InvariantCulture),
                 "menupage=" + State.MenuPage.ToString(CultureInfo.InvariantCulture),
                 "wikilang=" + (State.WikiLanguage ?? ""),
