@@ -55,6 +55,7 @@ namespace ValheimHelper
             }
             GUILayout.EndVertical();
 
+#if EDITION_FULL
             GUILayout.BeginVertical(HelperSkin.Section);
             GUILayout.Label(Lang.T("Лут"), HelperSkin.Header);
             float loot = MultiplierSlider(Lang.T("Множник луту мода (моби, скрині, дерева, руда)"), State.LootMultiplier, 1f, 10f, 0.5f, "loot");
@@ -66,6 +67,7 @@ namespace ValheimHelper
                 "і самі змінники світу не чіпає, тож досягнення теж. Лут рахує гра того, хто вбив моба чи відкрив скриню, тому з синхронізацією " +
                 "(«Час і погода») множник діє в обох.</color>"));
             GUILayout.EndVertical();
+#endif
 
             if (m_modIsHost && m_modPresets.Count > 0)
             {

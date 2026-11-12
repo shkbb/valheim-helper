@@ -40,17 +40,23 @@ namespace ValheimHelper
                 Map.MapSettings.Load();
                 Binds.Load();
                 Settings.Load();
+#if EDITION_HELPER
                 Storage.StorageSettings.Load();
+#endif
                 Perf.PerfSettings.Load();
                 GameObject go = new GameObject("ValheimHelper");
                 Root = go;
                 UnityEngine.Object.DontDestroyOnLoad(go);
                 go.AddComponent<CheatMenu>();
+#if EDITION_FULL
                 go.AddComponent<WorldTicker>();
+#endif
                 go.AddComponent<BindRunner>();
                 go.AddComponent<Map.MapOverlay>();
+#if EDITION_HELPER
                 go.AddComponent<Storage.StorageOverlay>();
                 go.AddComponent<Storage.CraftAmountPanel>();
+#endif
                 go.AddComponent<Map.WaypointOverlay>();
                 go.AddComponent<PhotoPanel>();
                 go.AddComponent<Perf.RenderLayer>();

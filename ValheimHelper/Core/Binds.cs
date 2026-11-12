@@ -113,6 +113,7 @@ namespace ValheimHelper
 
         static Binds()
         {
+#if EDITION_FULL
             s_section = Lang.T("Персонаж");
             Toggle("god", Lang.T("Безсмертя"), () => State.GodMode, v => State.GodMode = v);
             Toggle("stamina", Lang.T("Нескінченна витривалість"), () => State.InfiniteStamina, v => State.InfiniteStamina = v);
@@ -132,7 +133,9 @@ namespace ValheimHelper
             Multiplier("run", Lang.T("Швидкий біг"), () => State.RunSpeedMultiplier, v => State.RunSpeedMultiplier = v, 2f);
             Toggle("portals", Lang.T("Портали пропускають руду"), () => State.TeleportAnything, v => State.TeleportAnything = v);
             Command("skills100", Lang.T("Усі навички до 100"), Actions.AllSkillsTo100);
+#endif
 
+#if EDITION_FULL
             s_section = Lang.T("Друзі");
             Command("effectsclear", Lang.T("Зняти всі ефекти з себе"), () =>
             {
@@ -140,16 +143,21 @@ namespace ValheimHelper
                 return targets.Count > 0 ? PlayerTools.Remove(targets[0], null) : null;
             });
             Toggle("acceptgifts", Lang.T("Приймати речі, які надсилають друзі"), () => Gifts.AcceptGifts, v => Gifts.AcceptGifts = v);
+#endif
 
+#if EDITION_HELPER
             s_section = Lang.T("Предмети й крафт");
             StorageToggle("craftamount", Lang.T("Вибір кількості біля вікна крафту"), () => Storage.StorageSettings.CraftAmountPanel, v => Storage.StorageSettings.CraftAmountPanel = v);
             StorageToggle("craftchests", Lang.T("Матеріали зі скринь поруч, коли крафтиш"), () => Storage.StorageSettings.UseChestsForCrafting, v => Storage.StorageSettings.UseChestsForCrafting = v);
             StorageToggle("buildchests", Lang.T("Матеріали зі скринь поруч, коли будуєш"), () => Storage.StorageSettings.UseChestsForBuilding, v => Storage.StorageSettings.UseChestsForBuilding = v);
             Command("pickupall", Lang.T("Підібрати все з землі довкола"), () => Player.m_localPlayer != null ? Storage.RemotePickup.Start(Player.m_localPlayer, null) : null);
+#endif
 
             s_section = Lang.T("Будівництво");
+#if EDITION_FULL
             Toggle("freebuild", Lang.T("Будувати все без ресурсів"), () => State.FreeBuild, Actions.SetFreeBuild);
             Toggle("nosupport", Lang.T("Будівлі без опори"), () => State.NoSupportLimit, v => State.NoSupportLimit = v);
+#endif
             Command("builderview", Lang.T("Будівельник: наступний режим перегляду (усе → каркас → … → усе)"), BuilderView.NextPreset);
             Command("bv_all", Lang.T("Режим перегляду: усе"), () => BuilderView.Preset(Lang.T("усе")));
             Command("bv_frame", Lang.T("Режим перегляду: лише каркас"), () => BuilderView.Preset(Lang.T("лише каркас"), BuilderView.Kind.Frame));
@@ -163,6 +171,7 @@ namespace ValheimHelper
                 Toggle("bvk" + i, Lang.F("Показувати: {0}", BuilderView.KindNames[i]), () => BuilderView.Shown[(int)kind], v => BuilderView.Set(kind, v));
             }
 
+#if EDITION_HELPER
             s_section = Lang.T("База");
             Command("stash", Lang.T("Скласти речі в скрині поруч"), Storage.StorageSorter.StartStash);
             Command("stashhighlight", Lang.T("Сховати підсвітку скринь"), () =>
@@ -188,8 +197,10 @@ namespace ValheimHelper
             StorageToggle("smelteroutput", Lang.T("Готове з печей — одразу в скриню"), () => Storage.StorageSettings.SmelterToChests, v => Storage.StorageSettings.SmelterToChests = v);
             Command("fires", Lang.T("Заправити факели й вогнища поруч"), () => Storage.Fires.Fill(null));
             Toggle("lowfires", Lang.T("Підсвітити порожні факели й вогнища"), () => Storage.StorageOverlay.LowFiresActive, Storage.StorageOverlay.ShowLowFires);
+#endif
 
             s_section = Lang.T("Світ");
+#if EDITION_FULL
             Command("time06", Lang.T("Перемотати час світу до 06:00"), () => WorldTools.SkipWorldClockTo(6f));
             Command("time12", Lang.T("Перемотати час світу до 12:00"), () => WorldTools.SkipWorldClockTo(12f));
             Command("time18", Lang.T("Перемотати час світу до 18:00"), () => WorldTools.SkipWorldClockTo(18f));
@@ -224,6 +235,7 @@ namespace ValheimHelper
             Multiplier("loot", Lang.T("Множник луту"), () => State.LootMultiplier, WorldTools.SetLootMultiplier, 2f);
             Toggle("sync", Lang.T("Синхронізація з другом (погода, час, лут)"), () => State.SyncWithFriends, v => State.SyncWithFriends = v);
             Command("despawn", Lang.T("Прибрати мобів, створених модом"), () => Lang.F("Прибрано мобів: {0}.", Spawner.RemoveSpawned()));
+#endif
             Command("freecam", Lang.T("Вільна камера для знімків (увімкнути / вимкнути)"), FreeCamera.Toggle);
             Command("photomode", Lang.T("Фоторежим (увімкнути / вимкнути)"), PhotoMode.Toggle);
             Command("photoshot", Lang.T("Фоторежим: зробити знімок"), PhotoMode.Shot);
@@ -251,6 +263,7 @@ namespace ValheimHelper
             });
             MapToggle("sharepins", Lang.T("Друзі бачать мої значки гри на карті"), () => Map.MapSettings.ShareGamePins, v => Map.MapSettings.ShareGamePins = v);
             Command("waypoint", Lang.T("Мітка в світі там, куди дивишся"), Map.Waypoints.AddWhereLooking);
+#if EDITION_FULL
             Toggle("mapteleport", Lang.T("Телепорт з карти (Ctrl + ПКМ)"), () => State.MapTeleport, v => State.MapTeleport = v);
             Command("exploreall", Lang.T("Відкрити всю карту (назавжди для цього персонажа)"), () =>
             {
@@ -261,6 +274,7 @@ namespace ValheimHelper
                 Minimap.instance.ExploreAll();
                 return Lang.T("Карту відкрито.");
             });
+#endif
 
             s_section = Lang.T("Налаштування");
             Command("imagereset", Lang.T("Зображення як у грі"), () =>
@@ -304,6 +318,7 @@ namespace ValheimHelper
             });
         }
 
+#if EDITION_HELPER
         private static void StorageToggle(string id, string label, Func<bool> get, Action<bool> set)
         {
             Toggle(id, label, get, v =>
@@ -312,6 +327,7 @@ namespace ValheimHelper
                 Storage.StorageSettings.Changed();
             });
         }
+#endif
 
         private static void MapToggle(string id, string label, Func<bool> get, Action<bool> set)
         {

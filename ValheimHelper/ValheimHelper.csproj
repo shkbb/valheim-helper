@@ -17,6 +17,29 @@
     <HarmonyDir>$(MSBuildThisFileDirectory)..\deps\BepInExPack\BepInExPack_Valheim\BepInEx\core</HarmonyDir>
   </PropertyGroup>
 
+  <!-- Editions (dotnet build -p:Edition=legal|helper|full): legal = map, guide, camera, statistics, settings, achievement
+       list; helper = legal + base helper (chests, smelters, torches, crafting from chests, pickup, animals, world modifiers);
+       full = everything, cheats included. The code of a higher edition is not compiled into a lower one at all. -->
+  <PropertyGroup>
+    <Edition Condition="'$(Edition)' == ''">full</Edition>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Edition)' == 'full'">
+    <DefineConstants>$(DefineConstants);EDITION_FULL;EDITION_HELPER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Edition)' == 'helper'">
+    <DefineConstants>$(DefineConstants);EDITION_HELPER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Edition)' != 'full'">
+    <Compile Remove="Patches\AchievementPatches.cs;Patches\BuildPatches.cs;Patches\MovementPatches.cs;Patches\PlayerPatches.cs;Patches\WorldPatches.cs" />
+    <Compile Remove="Core\PlayerTools.cs;Core\WorldTools.cs;Core\Spawner.cs;Wiki\WikiStudio.cs" />
+    <Compile Remove="Menu\CheatMenu.Players.cs;Menu\CheatMenu.World.cs;Menu\CheatMenu.Mobs.cs;Menu\CheatMenu.Gifts.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Edition)' == 'legal'">
+    <Compile Remove="Patches\CraftPatches.cs;Patches\StoragePatches.cs;Storage\**\*.cs" />
+    <Compile Remove="Menu\CheatMenu.Storage.cs;Menu\CheatMenu.Fires.cs;Menu\CheatMenu.Pickup.cs;Menu\CheatMenu.Modifiers.cs" />
+    <Compile Remove="Core\WorldModifierEditor.cs;Menu\CheatMenu.Animals.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <Reference Include="0Harmony"><HintPath>$(HarmonyDir)\0Harmony.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="assembly_valheim"><HintPath>$(ManagedDir)\assembly_valheim.dll</HintPath><Private>false</Private></Reference>

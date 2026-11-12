@@ -22,6 +22,7 @@ namespace ValheimHelper
                 "якщо в хоста теж стоїть Valheim Helper. Мод лише читає дані світу: нічого не записує в сейв і не ставить позначок читів.</color>"));
             GUILayout.EndVertical();
 
+#if EDITION_FULL
             GUILayout.BeginVertical(HelperSkin.Section);
             GUILayout.Label(Lang.T("Дії з картою"), HelperSkin.Header);
             State.MapTeleport = GUILayout.Toggle(State.MapTeleport, Lang.T(" Телепорт з карти: відкрий карту, Ctrl + права кнопка по точці") + Binds.Hint("mapteleport"));
@@ -32,6 +33,7 @@ namespace ValheimHelper
                 ShowMessage(Lang.T("Карту відкрито."));
             }
             GUILayout.EndVertical();
+#endif
         }
 
         private Wiki.WikiView m_wiki;

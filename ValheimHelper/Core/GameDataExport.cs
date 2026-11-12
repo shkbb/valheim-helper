@@ -35,7 +35,11 @@ namespace ValheimHelper
         {
             string glossary = GameGlossary.Export();
             string data = Export();
+#if EDITION_FULL
             return glossary + "\n" + data + "\n" + WikiStudio.StartModels();
+#else
+            return glossary + "\n" + data;
+#endif
         }
 
         internal static string Export()

@@ -181,7 +181,15 @@ namespace ValheimHelper.Storage
             {
                 message += Lang.F(" Не віддав власник (інший гравець поруч?): {0}.", left);
             }
+#if EDITION_FULL
             PlayerTools.Report(message);
+#else
+            if (!string.IsNullOrEmpty(message))
+            {
+                Log.Info(message);
+                Player.m_localPlayer?.Message(MessageHud.MessageType.TopLeft, message);
+            }
+#endif
         }
     }
 }

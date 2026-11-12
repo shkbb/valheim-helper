@@ -143,6 +143,7 @@ namespace ValheimHelper
                 {
                     return;
                 }
+#if EDITION_FULL
                 if (State.InfiniteStamina)
                 {
                     player.AddStamina(player.GetMaxStamina());
@@ -156,6 +157,7 @@ namespace ValheimHelper
                 {
                     TeleportToMapCursor();
                 }
+#endif
                 if (State.MenuOpen && CurrentPage.Id == "achievements" && Time.unscaledTime >= m_nextStatusRefresh)
                 {
                     m_nextStatusRefresh = Time.unscaledTime + 1f;
@@ -236,6 +238,7 @@ namespace ValheimHelper
         {
             return new[]
             {
+#if EDITION_FULL
                 new MenuSection(Lang.T("Персонаж"),
                     new MenuPage(Lang.T("Стан"), DrawPlayerTab),
                     new MenuPage(Lang.T("Рух"), () => { DrawMovementTab(); DrawSpeedSection(); }),
@@ -247,18 +250,34 @@ namespace ValheimHelper
                     new MenuPage(Lang.T("Видача"), DrawItemsTab),
                     new MenuPage(Lang.T("Крафт"), () => DrawStoragePage(DrawCraftAmountSection, DrawCraftSection)),
                     new MenuPage(Lang.T("Підібрати"), DrawPickupTab)),
+#else
+                new MenuSection(Lang.T("Персонаж"),
+                    new MenuPage(Lang.T("Статистика"), DrawStatsTab)),
+#endif
+#if EDITION_HELPER && !EDITION_FULL
+                new MenuSection(Lang.T("Предмети й крафт"),
+                    new MenuPage(Lang.T("Крафт"), () => DrawStoragePage(DrawCraftAmountSection, DrawCraftSection)),
+                    new MenuPage(Lang.T("Підібрати"), DrawPickupTab)),
+#endif
                 new MenuSection(Lang.T("Будівництво"),
                     new MenuPage(Lang.T("Будівництво"), DrawBuildTab)),
+#if EDITION_HELPER
                 new MenuSection(Lang.T("База"),
                     new MenuPage(Lang.T("Склад"), () => DrawStoragePage(DrawStashSection, DrawStockSection, DrawTagSection)),
                     new MenuPage(Lang.T("Не чіпати"), () => DrawStoragePage(DrawKeepSection)),
                     new MenuPage(Lang.T("Печі"), () => DrawStoragePage(DrawFurnaceSection, DrawSmelterOutputSection)),
                     new MenuPage(Lang.T("Факели"), DrawFiresTab),
                     new MenuPage(Lang.T("Тварини"), DrawAnimalsTab)),
+#endif
+#if EDITION_FULL
                 new MenuSection(Lang.T("Світ"),
                     new MenuPage(Lang.T("Час і погода"), DrawWorldTab),
                     new MenuPage(Lang.T("Змінники"), DrawModifiersTab),
                     new MenuPage(Lang.T("Моби"), DrawMobsTab)),
+#elif EDITION_HELPER
+                new MenuSection(Lang.T("Світ"),
+                    new MenuPage(Lang.T("Змінники"), DrawModifiersTab)),
+#endif
                 new MenuSection(Lang.T("Камера"),
                     new MenuPage(Lang.T("Камера"), DrawCameraTab)),
                 new MenuSection(Lang.T("Карта"),
@@ -270,8 +289,11 @@ namespace ValheimHelper
                     new MenuPage(Lang.T("Досягнення"), DrawAchievementsTab, "achievements"),
                     new MenuPage(Lang.T("Зображення"), DrawImageTab),
                     new MenuPage(Lang.T("Швидкодія"), DrawPerfTab),
-                    new MenuPage(Lang.T("Мова"), DrawLanguageTab),
-                    new MenuPage(Lang.T("Скидання"), DrawResetSettings)),
+                    new MenuPage(Lang.T("Мова"), DrawLanguageTab)
+#if EDITION_FULL
+                    , new MenuPage(Lang.T("Скидання"), DrawResetSettings)
+#endif
+                    ),
             };
         }
 
@@ -430,6 +452,7 @@ namespace ValheimHelper
             GUI.DragWindow(new Rect(0f, 0f, 10000f, 24f));
         }
 
+#if EDITION_FULL
         private void DrawPlayerTab()
         {
             State.GodMode = GUILayout.Toggle(State.GodMode, Lang.T(" Безсмертя (моби, падіння, холод, лава, отрута)") + Binds.Hint("god"));
@@ -475,6 +498,7 @@ namespace ValheimHelper
                 GUILayout.Space(8f);
             }
         }
+#endif
 
         // "Мова": the language of the menu (the articles of the guide have their own switch there).
         private void DrawLanguageTab()
@@ -501,6 +525,7 @@ namespace ValheimHelper
             GUILayout.EndVertical();
         }
 
+#if EDITION_FULL
         private void DrawResetSettings()
         {
             GUILayout.Label(Lang.T("<color=#c0c0c0>Усі галочки й повзунки меню зберігаються між запусками гри.</color>"));
@@ -510,7 +535,9 @@ namespace ValheimHelper
                 ShowMessage(Lang.T("Усі функції вимкнено, множники ×1, погода й час як у грі."));
             }
         }
+#endif
 
+#if EDITION_FULL
         private void DrawMovementTab()
         {
             bool fly = GUILayout.Toggle(State.Fly, Lang.T(" Політ (Пробіл — вгору, Ctrl — вниз, Shift — швидше)") + Binds.Hint("fly"));
@@ -522,9 +549,11 @@ namespace ValheimHelper
             State.TeleportAnything = GUILayout.Toggle(State.TeleportAnything, Lang.T(" Портали пропускають руду і метали") + Binds.Hint("portals"));
             Bindable("portals");
         }
+#endif
 
         private void DrawBuildTab()
         {
+#if EDITION_FULL
             bool freeBuild = GUILayout.Toggle(State.FreeBuild, Lang.T(" Будувати все без ресурсів і без верстака поруч") + Binds.Hint("freebuild"));
             Bindable("freebuild");
             if (freeBuild != State.FreeBuild)
@@ -537,6 +566,7 @@ namespace ValheimHelper
                 "а розбирати будівлі можна без станції поруч. Після вимкнення лишаються тільки вивчені будівлі.\n" +
                 "Якщо вимкнути «без опори», непідперті конструкції одразу впадуть.\n" +
                 "Коли будуєте разом, вмикайте це обом: руйнування рахує гра того, хто «володіє» ділянкою.</color>"));
+#endif
             DrawBuilderViewSection();
         }
 
@@ -629,6 +659,7 @@ namespace ValheimHelper
             GUILayout.EndVertical();
         }
 
+#if EDITION_FULL
         private void DrawItemsTab()
         {
             Player player = Player.m_localPlayer;
@@ -679,7 +710,9 @@ namespace ValheimHelper
                 GUILayout.EndHorizontal();
             }
         }
+#endif
 
+#if EDITION_FULL
         private void DrawSkillsTab()
         {
             Player player = Player.m_localPlayer;
@@ -715,10 +748,12 @@ namespace ValheimHelper
                 GUILayout.EndHorizontal();
             }
         }
+#endif
 
         private void DrawAchievementsTab()
         {
             DrawAchievementList();
+#if EDITION_FULL
             GUILayout.Label(Lang.T("<b>Що зараз блокує досягнення</b>"));
             GUILayout.Label(Lang.T("Гра позначена як модифікована (isModded): ") + YesNo(Game.isModded));
             SaveCleaner.CharacterStatus character = m_characterStatus;
@@ -766,8 +801,10 @@ namespace ValheimHelper
             GUILayout.Label(Lang.T("<b>Обхід перевірок</b>"));
             State.BypassCheatChecks = GUILayout.Toggle(State.BypassCheatChecks,
                 Lang.T(" Ігнорувати позначки гри (діє, поки гра запущена з цим модом)"));
+#endif
         }
 
+#if EDITION_FULL
         private void WorldStatus()
         {
             SaveCleaner.WorldStatus world = m_worldStatus;
@@ -803,7 +840,9 @@ namespace ValheimHelper
                 GUILayout.Label(Lang.F("<color=#c0c0c0>Записів, які не вдалося прочитати (пропущені без змін): {0}</color>", world.UnreadableRecords));
             }
         }
+#endif
 
+#if EDITION_FULL
         private void TeleportToMapCursor()
         {
             Vector3 pointer = ZInput.pointerPosition;
@@ -814,7 +853,9 @@ namespace ValheimHelper
             }
             s_debugTeleport.Invoke(Minimap.instance, new object[] { worldPoint });
         }
+#endif
 
+#if EDITION_FULL
         private bool EnsureItems()
         {
             if (m_items != null)
@@ -861,7 +902,9 @@ namespace ValheimHelper
             Log.Info($"Item list built: {items.Count} items");
             return true;
         }
+#endif
 
+#if EDITION_FULL
         private static int ClassifyItem(string itemType)
         {
             switch (itemType)
@@ -893,7 +936,9 @@ namespace ValheimHelper
                     return 5;
             }
         }
+#endif
 
+#if EDITION_FULL
         private void RefreshItemFilter()
         {
             string search = (m_search ?? "").Trim().ToLowerInvariant();
@@ -914,7 +959,9 @@ namespace ValheimHelper
                 }
             }
         }
+#endif
 
+#if EDITION_FULL
         private void GiveItem(Player player, ItemEntry entry)
         {
             if (!int.TryParse(m_amountText, out int amount) || amount <= 0)
@@ -936,7 +983,9 @@ namespace ValheimHelper
                 ? Lang.F("Видано: {0} ×{1} (якість {2}). Що не влізло — лежить під ногами.", entry.DisplayName, amount, quality)
                 : Lang.T("Немає вільного місця в інвентарі."));
         }
+#endif
 
+#if EDITION_FULL
         private static void SetIcon(ItemEntry entry, Sprite sprite)
         {
             try
@@ -955,7 +1004,9 @@ namespace ValheimHelper
                 entry.IconTexture = null;
             }
         }
+#endif
 
+#if EDITION_FULL
         private static void DrawIcon(ItemEntry entry, float size)
         {
             Rect rect = GUILayoutUtility.GetRect(size, size, GUILayout.Width(size), GUILayout.Height(size));
@@ -964,7 +1015,9 @@ namespace ValheimHelper
                 GUI.DrawTextureWithTexCoords(rect, entry.IconTexture, entry.IconUv);
             }
         }
+#endif
 
+#if EDITION_FULL
         private static Skills.SkillType[] GetSkillTypes()
         {
             List<Skills.SkillType> result = new List<Skills.SkillType>();
@@ -979,6 +1032,7 @@ namespace ValheimHelper
             }
             return result.ToArray();
         }
+#endif
 
         // Destructive actions need a second click within a few seconds.
         private bool ConfirmButton(string id, string label)

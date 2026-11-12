@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace ValheimHelper
 {
-    // Sending items straight into a friend's inventory. The game keeps every inventory on its owner's client,
+    // Which friends have the mod (all editions: the statistics compare with them), and, in the full edition only,
+    // sending items straight into a friend's inventory. The game keeps every inventory on its owner's client,
     // so the friend's Valheim Helper receives the request and adds the item itself, exactly like the local
     // "Дати" button (cheated: false, the same item as a crafted or picked up one). Friends without the mod
     // never answer the ping, and the menu tells so instead of sending anything.
@@ -64,13 +65,16 @@ namespace ValheimHelper
             {
                 rpc.Register<int>(RpcPing, OnPing);
                 rpc.Register<int>(RpcPong, OnPong);
+#if EDITION_FULL
                 rpc.Register<string, int, int>(RpcGift, OnGift);
                 rpc.Register<string>(RpcGiftResult, OnGiftResult);
+#endif
                 s_rpc = rpc;
                 s_modPeers.Clear();
                 s_pending.Clear();
                 s_pingAt = -100f;
             }
+#if EDITION_FULL
             for (int i = s_pending.Count - 1; i >= 0; i--)
             {
                 if (Time.unscaledTime - s_pending[i].SentAt > GiftTimeoutSec)
@@ -79,6 +83,7 @@ namespace ValheimHelper
                     s_pending.RemoveAt(i);
                 }
             }
+#endif
         }
 
         // Asks every player with the mod to answer; players without it stay silent.
@@ -120,6 +125,7 @@ namespace ValheimHelper
             return result;
         }
 
+#if EDITION_FULL
         internal static void Send(long target, string friendName, string prefab, int amount, int quality)
         {
             if (ZRoutedRpc.instance == null)
@@ -130,6 +136,7 @@ namespace ValheimHelper
             s_pending.Add(new PendingGift { Target = target, Name = friendName, SentAt = Time.unscaledTime });
             ZRoutedRpc.instance.InvokeRoutedRPC(target, RpcGift, prefab, amount, quality);
         }
+#endif
 
         private static void OnPing(long sender, int version)
         {
@@ -146,6 +153,7 @@ namespace ValheimHelper
             s_modPeers[sender] = version;
         }
 
+#if EDITION_FULL
         private static void OnGift(long sender, string prefab, int amount, int quality)
         {
             string from = PlayerName(sender);
@@ -203,6 +211,7 @@ namespace ValheimHelper
             }
             Report(message);
         }
+#endif
 
         private static void Report(string message)
         {

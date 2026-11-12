@@ -1,13 +1,25 @@
-# Builds ValheimHelper.dll and assembles dist\ValheimHelper (+ zip for the friend).
+# Builds ValheimHelper.dll in three editions and assembles the packages:
+#   dist\ValheimHelper         (+ ValheimHelper.zip)         full: everything, cheats included (the one installed here)
+#   dist\ValheimHelper-helper  (+ ValheimHelper-helper.zip)  helper: map, guide, camera, statistics + base helper, no cheats
+#   dist\ValheimHelper-legal   (+ ValheimHelper-legal.zip)   legal: map, guide, camera, statistics, achievement list
+# The code of a higher edition is not compiled into a lower one (ValheimHelper.csproj, property Edition).
 # ASCII-only on purpose: Windows PowerShell 5.1 misreads non-ASCII in scripts saved without BOM.
 # -SkipTests: package without the sort/wiki tests (only while a wiki pack is being refreshed and its cache is ahead of it).
-param([switch]$SkipTests)
+# -Editions full,helper,legal: which packages to make (full is always built first, it is the base of the others).
+param([switch]$SkipTests, [string[]]$Editions = @('full', 'helper', 'legal'))
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $pack = Join-Path $root 'deps\BepInExPack\BepInExPack_Valheim'
+$project = Join-Path $root 'ValheimHelper\ValheimHelper.csproj'
 
-dotnet build (Join-Path $root 'ValheimHelper\ValheimHelper.csproj') -c Release -nologo
-if ($LASTEXITCODE -ne 0) { throw 'Build failed' }
+function Build-Edition([string]$edition) {
+    $out = Join-Path $root ('ValheimHelper\bin\Release\' + $edition)
+    dotnet build $project -c Release -nologo "-p:Edition=$edition" -o $out
+    if ($LASTEXITCODE -ne 0) { throw "Build failed: $edition" }
+    return (Join-Path $out 'ValheimHelper.dll')
+}
+
+$fullDll = Build-Edition 'full'
 
 # Storage sorting rules are checked on scenarios before anything is packaged
 if (-not $SkipTests) {
@@ -24,7 +36,7 @@ New-Item -ItemType Directory -Force $modDir | Out-Null
 # Files that end up in the Valheim folder
 Copy-Item (Join-Path $pack 'winhttp.dll') $gameDir
 Copy-Item (Join-Path $root 'installer\doorstop_config.ini') $gameDir
-Copy-Item (Join-Path $root 'ValheimHelper\bin\Release\netstandard2.1\ValheimHelper.dll') $modDir
+Copy-Item $fullDll $modDir
 # Menu languages other than Ukrainian and English: ValheimHelper\lang\<code>.json (tools\l10n\gen_langs.py)
 $langSource = Join-Path $root 'ValheimHelper\lang'
 if (Test-Path $langSource) {
@@ -77,8 +89,23 @@ foreach ($name in 'install.bat', 'uninstall.bat', 'README.txt') {
     Copy-Item (Join-Path $root "installer\$name") $dist
 }
 
-$zip = Join-Path $root 'dist\ValheimHelper.zip'
-if (Test-Path $zip) { Remove-Item $zip -Force }
-Compress-Archive -Path $dist -DestinationPath $zip
-Write-Host "OK: $dist"
-Write-Host "OK: $zip"
+function Zip-Folder([string]$folder, [string]$zip) {
+    if (Test-Path $zip) { Remove-Item $zip -Force }
+    Compress-Archive -Path $folder -DestinationPath $zip
+    Write-Host "OK: $folder"
+    Write-Host "OK: $zip"
+}
+
+if ($Editions -contains 'full') {
+    Zip-Folder $dist (Join-Path $root 'dist\ValheimHelper.zip')
+}
+# The other editions: the same package with their own DLL
+foreach ($edition in $Editions) {
+    if ($edition -eq 'full') { continue }
+    $dll = Build-Edition $edition
+    $editionDist = Join-Path $root ('dist\ValheimHelper-' + $edition)
+    if (Test-Path $editionDist) { Remove-Item $editionDist -Recurse -Force }
+    Copy-Item $dist $editionDist -Recurse
+    Copy-Item $dll (Join-Path $editionDist 'game\ValheimHelper\ValheimHelper.dll') -Force
+    Zip-Folder $editionDist (Join-Path $root ('dist\ValheimHelper-' + $edition + '.zip'))
+}

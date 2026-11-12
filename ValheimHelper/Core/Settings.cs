@@ -83,6 +83,7 @@ namespace ValheimHelper
             bool on = value == "1";
             switch (key)
             {
+#if EDITION_FULL
                 case "god": State.GodMode = on; break;
                 case "stamina": State.InfiniteStamina = on; break;
                 case "eitr": State.InfiniteEitr = on; break;
@@ -96,7 +97,9 @@ namespace ValheimHelper
                 case "freebuild": State.FreeBuild = on; break;
                 case "nosupport": State.NoSupportLimit = on; break;
                 case "bypasscheats": State.BypassCheatChecks = on; break;
+#endif
                 case "sync": State.SyncWithFriends = on; break;
+#if EDITION_FULL
                 case "acceptgifts": Gifts.AcceptGifts = on; break;
                 case "run": State.RunSpeedMultiplier = Number(value, 1f, 5f); break;
                 case "damage": State.DamageMultiplier = Number(value, 1f, 50f); break;
@@ -105,6 +108,7 @@ namespace ValheimHelper
                 case "gamespeed": State.GameSpeed = Number(value, 1f, 5f); break;
                 case "weather": s_weather = value; break;
                 case "fixedtime": s_fixedHours = value.Length == 0 ? -1f : Number(value, -1f, 24f); break;
+#endif
                 case "menux": State.MenuX = Number(value, -10000f, 10000f); break;
                 case "menuy": State.MenuY = Number(value, -10000f, 10000f); break;
                 case "menuw": State.MenuW = Number(value, 600f, 10000f); break;
@@ -170,6 +174,7 @@ namespace ValheimHelper
         // Puts back what only a running world can hold, once per world / character.
         private static void RestoreInWorld()
         {
+#if EDITION_FULL
             EnvMan env = EnvMan.instance;
             if (env != null && !ReferenceEquals(env, s_envRestored))
             {
@@ -190,18 +195,22 @@ namespace ValheimHelper
                     Actions.RefreshWorldRates();
                 }
             }
+#endif
         }
 
         private static string Snapshot()
         {
+#if EDITION_FULL
             EnvMan env = EnvMan.instance;
             if (env != null && ReferenceEquals(env, s_envRestored))
             {
                 s_weather = WorldTools.WeatherOverride ?? "";
                 s_fixedHours = WorldTools.IsLocalTimeFixed ? WorldTools.LocalFixedHours : -1f;
             }
+#endif
             List<string> lines = new List<string>
             {
+#if EDITION_FULL
                 Bit("god", State.GodMode),
                 Bit("stamina", State.InfiniteStamina),
                 Bit("eitr", State.InfiniteEitr),
@@ -224,6 +233,7 @@ namespace ValheimHelper
                 Num("gamespeed", State.GameSpeed),
                 "weather=" + s_weather,
                 "fixedtime=" + (s_fixedHours < 0f ? "" : s_fixedHours.ToString("0.###", CultureInfo.InvariantCulture)),
+#endif
                 Num("menux", Mathf.Round(State.MenuX)),
                 Num("menuy", Mathf.Round(State.MenuY)),
                 Num("menuw", Mathf.Round(State.MenuW)),
@@ -274,6 +284,7 @@ namespace ValheimHelper
         // "Скинути все": every toggle off, every multiplier x1, the game's own weather and time.
         internal static void ResetAll()
         {
+#if EDITION_FULL
             State.GodMode = false;
             State.InfiniteStamina = false;
             State.InfiniteEitr = false;
@@ -296,6 +307,7 @@ namespace ValheimHelper
             s_weather = "";
             s_fixedHours = -1f;
             WorldTools.RestoreLocal("", -1f);
+#endif
         }
     }
 }

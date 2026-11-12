@@ -94,6 +94,7 @@ namespace ValheimHelper
             return result;
         }
 
+#if EDITION_FULL
         private static void GiveAchievement(Achievement achievement, bool showPopup)
         {
             // A tainted character or world makes the game ignore the call, so the bypass is on for the moment of the call.
@@ -108,6 +109,7 @@ namespace ValheimHelper
                 State.BypassCheatChecks = before;
             }
         }
+#endif
 
         private void DrawAchievementList()
         {
@@ -145,6 +147,7 @@ namespace ValheimHelper
             GUILayout.Label(Lang.F("Виконано {0} з {1}", done, m_achievementRows.Count) +
                 (steamKnown > 0 ? Lang.F(" · у Steam: {0} з {1}", steamDone, m_achievementRows.Count)
                     : Lang.T(" · <color=#c0c0c0>Steam не відповідає</color>")));
+#if EDITION_FULL
             int missing = 0;
             foreach (AchievementRow row in m_achievementRows)
             {
@@ -164,6 +167,7 @@ namespace ValheimHelper
                 ShowMessage(Lang.F("Видано досягнень: {0}. Якщо якесь не з'явилось у списку, гра його не прийняла.", given));
                 m_nextAchievementRead = 0f;
             }
+#endif
             foreach (AchievementRow row in m_achievementRows)
             {
                 GUILayout.BeginHorizontal();
@@ -171,10 +175,12 @@ namespace ValheimHelper
                 GUILayout.Label("<color=#c0c0c0>" + row.Description + "</color>", GUILayout.Width(360f));
                 GUILayout.Label(row.Steam == true ? "<color=#60d060>Steam ✔</color>"
                     : row.Steam == false ? "<color=#808080>Steam ○</color>" : "", GUILayout.Width(80f));
+#if EDITION_FULL
                 if (!(row.Unlocked && row.Steam != false) && GUILayout.Button(Lang.T("Виконати")))
                 {
                     GiveAchievement(row.Source, showPopup: true);
                 }
+#endif
                 GUILayout.EndHorizontal();
             }
             GUILayout.Space(8f);

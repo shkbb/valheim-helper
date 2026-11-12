@@ -180,7 +180,9 @@ namespace ValheimHelper.Map
             WorldObjects.Register(rpc);
             GamePins.Register(rpc);
             Waypoints.Register(rpc);
+#if EDITION_HELPER
             Storage.RemoteStorage.Register(rpc);
+#endif
             s_rpc = rpc;
         }
 

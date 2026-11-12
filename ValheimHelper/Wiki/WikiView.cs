@@ -318,11 +318,13 @@ namespace ValheimHelper.Wiki
                 m_message(GameDataExport.ExportAll());
                 return;
             }
+#if EDITION_FULL
             if (target == "::action:placeshots")
             {
                 m_message(WikiStudio.StartPlaces());
                 return;
             }
+#endif
             if (target == "::action:wikiupdate")
             {
                 StartUpdates(byHand: true);
@@ -588,6 +590,7 @@ namespace ValheimHelper.Wiki
                 Text = Link("::action:glossary", Lang.T("Вивантажити дані гри")) + Lang.T(" — для статей вікі з цифрами самої гри: офіційні назви англійською й українською " +
                     "(wiki/glossary_game.tsv) і все про предмети, рецепти, будівлі, істот, де вони з'являються, та ефекти (wiki/game_data.json). Працює у світі."),
             });
+#if EDITION_FULL
             article.Blocks.Add(new WikiBlock
             {
                 Kind = BlockKind.Paragraph,
@@ -595,6 +598,7 @@ namespace ValheimHelper.Wiki
                     Link("::action:placeshots", Lang.T("Зняти місця для вікі")) + Lang.T(" — вікінга по черзі перенесе до найближчого місця кожного виду, " +
                     "без шкоди й непомітно, камера зніме його опівдні без інтерфейсу, і вікінг повернеться назад. Краще робити це в тестовому світі."),
             });
+#endif
             m_footer = Attribution();
             return article;
         }

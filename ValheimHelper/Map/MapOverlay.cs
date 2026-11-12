@@ -501,6 +501,7 @@ namespace ValheimHelper.Map
         // Deliveries from the base storage on their way: the item's icon in a circle moving to the player, and the time left.
         private void DrawDeliveries(Minimap map, Rect uv, Rect mapRect, float size)
         {
+#if EDITION_HELPER
             Player player = Player.m_localPlayer;
             if (player == null || Storage.RemoteStorage.Deliveries.Count == 0 || Event.current.type != EventType.Repaint)
             {
@@ -536,6 +537,7 @@ namespace ValheimHelper.Map
                 GUI.Label(label, time, m_smallStyle);
             }
             GUI.color = Color.white;
+#endif
         }
 
         private static string NearbyPlaceName(Vector3 pos)

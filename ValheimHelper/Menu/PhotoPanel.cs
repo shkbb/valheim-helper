@@ -165,7 +165,12 @@ namespace ValheimHelper
             }
             m_wasFree = free;
             // nor on the wiki studio's pictures of places
-            if (!free || PhotoMode.Capturing || WikiStudio.Busy || State.MenuOpen || Event.current.type != EventType.Repaint)
+#if EDITION_FULL
+            bool studio = WikiStudio.Busy;
+#else
+            bool studio = false;
+#endif
+            if (!free || PhotoMode.Capturing || studio || State.MenuOpen || Event.current.type != EventType.Repaint)
             {
                 return;
             }

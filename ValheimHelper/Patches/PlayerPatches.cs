@@ -143,17 +143,4 @@ namespace ValheimHelper.Patches
             }
         }
     }
-
-    // While the menu is open the character must not walk/attack when typing in the search field.
-    [HarmonyPatch(typeof(Player), "TakeInput")]
-    internal static class MenuBlocksPlayerInput
-    {
-        private static void Postfix(ref bool __result)
-        {
-            if (State.MenuOpen)
-            {
-                __result = false;
-            }
-        }
-    }
 }
