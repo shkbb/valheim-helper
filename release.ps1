@@ -33,6 +33,8 @@ foreach ($name in 'legal', 'helper', 'full', 'updates') {
     if (-not (Test-Path $file)) { throw "Missing $file" }
     $assets += $file
 }
+# wiki packs the mod fetches by itself when an install lacks them (build.ps1)
+foreach ($pack in Get-ChildItem (Join-Path $root 'dist') -Filter 'wiki-*.zip') { $assets += $pack.FullName }
 
 if (-not $Notes) { $Notes = "Valheim Helper $version" }
 $text = $Notes + "`n`n" +
@@ -40,7 +42,7 @@ $text = $Notes + "`n`n" +
     "- ValheimHelper-legal.zip: map, guide, camera, statistics, achievement list, no advantage in the game`n" +
     "- ValheimHelper-helper.zip: legal + chests, smelters, torches, crafting from chests`n" +
     "- ValheimHelper-full.zip: everything, cheats included`n" +
-    "ValheimHelper-updates.zip is for the mod's own updater; you don't need it."
+    "ValheimHelper-updates.zip and wiki-*.zip are for the mod's own updater; you don't need them."
 $args = @('release', 'create', $tag, '-R', $repo, '--title', "Valheim Helper $version", '--notes', $text) + $assets
 if ($Draft) { $args += '--draft' }
 if ($Prerelease) { $args += '--prerelease' }

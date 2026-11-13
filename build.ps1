@@ -146,4 +146,33 @@ if ($Distribution -ne 'nexus') {
     if (Test-Path $updatesZip) { Remove-Item $updatesZip -Force }
     Compress-Archive -Path (Join-Path $updates '*') -DestinationPath $updatesZip
     Write-Host "OK: $updatesZip"
+
+    # Wiki packs an older install may not have (the updates zip carries no wiki): wiki-<code>.zip with <code>/ and the
+    # pack's own pictures in img/ (index.part.tsv lists them). The mod fetches one when its folder is missing.
+    Get-ChildItem $distRoot -Filter 'wiki-*.zip' | Remove-Item -Force
+    $wikiOut = Join-Path $modDir 'wiki'
+    foreach ($packDir in Get-ChildItem $wikiOut -Directory | Where-Object { $_.Name -like 'wg-*' }) {
+        $code = $packDir.Name
+        $prefix = if ($code -eq 'wg-en') { 'wg~' } else { $code + '~' }
+        $stage = Join-Path $distRoot ('wikipack-' + $code)
+        if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
+        New-Item -ItemType Directory -Force (Join-Path $stage 'img') | Out-Null
+        Copy-Item $packDir.FullName (Join-Path $stage $code) -Recurse
+        $part = New-Object System.Text.StringBuilder
+        foreach ($line in [System.IO.File]::ReadAllLines((Join-Path $wikiOut 'img\index.tsv'), [System.Text.Encoding]::UTF8)) {
+            $parts = $line.Split("`t")
+            if ($parts.Length -ge 3 -and $parts[0].StartsWith($prefix)) {
+                $source = Join-Path $wikiOut ('img\' + $parts[1])
+                if (Test-Path -LiteralPath $source) {
+                    Copy-Item -LiteralPath $source (Join-Path $stage 'img')
+                    [void]$part.Append($line).Append("`n")
+                }
+            }
+        }
+        [System.IO.File]::WriteAllText((Join-Path $stage 'img\index.part.tsv'), $part.ToString(), (New-Object System.Text.UTF8Encoding $false))
+        $packZip = Join-Path $distRoot ('wiki-' + $code + '.zip')
+        Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $packZip
+        Remove-Item $stage -Recurse -Force
+        Write-Host "OK: $packZip"
+    }
 }

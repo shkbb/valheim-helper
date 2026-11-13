@@ -50,6 +50,7 @@ namespace ValheimHelper
             }
             if (!byHand)
             {
+                FetchMissingPacks();
                 // the boot DLL already updated the mod (or found it up to date) before the game started
                 string updated = Environment.GetEnvironmentVariable("VALHEIMHELPER_UPDATED");
                 if (!string.IsNullOrEmpty(updated))
@@ -215,6 +216,128 @@ namespace ValheimHelper
                     }
                 }
                 return memory.ToArray();
+            }
+        }
+
+        // ---------------------------------------------------------------- wiki packs
+
+        // The updates archive carries no wiki (it would be huge), so a wiki pack added in a later version (Weird Gloop)
+        // would never reach an install that only updates itself. Each release has such packs as wiki-<code>.zip; one whose
+        // folder is missing (or still empty) is fetched once, on a background thread, and the guide picks it up.
+        private static bool s_packsAsked;
+
+        private static void FetchMissingPacks()
+        {
+            if (s_packsAsked)
+            {
+                return;
+            }
+            s_packsAsked = true;
+            Thread thread = new Thread(() =>
+            {
+                try
+                {
+                    JObject release = JObject.Parse(Encoding.UTF8.GetString(Download(LatestApi, 2L * 1024 * 1024)));
+                    foreach (JToken asset in release["assets"] ?? new JArray())
+                    {
+                        string name = (string)asset["name"] ?? "";
+                        string url = (string)asset["browser_download_url"] ?? "";
+                        if (!name.StartsWith("wiki-", StringComparison.OrdinalIgnoreCase) || !name.EndsWith(".zip", StringComparison.OrdinalIgnoreCase)
+                            || !url.StartsWith("https://github.com/", StringComparison.Ordinal))
+                        {
+                            continue;
+                        }
+                        string code = name.Substring(5, name.Length - 9).ToLowerInvariant();
+                        if (code.Length == 0 || code.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || code == "img"
+                            || !Wiki.WikiSources.Allowed(Wiki.WikiSources.Language(code)))
+                        {
+                            continue;
+                        }
+                        string pages = Path.Combine(Loader.Dir ?? ".", "wiki", code, "pages.txt");
+                        if (File.Exists(pages) && new FileInfo(pages).Length > 0)
+                        {
+                            continue;
+                        }
+                        Log.Info("Wiki pack " + code + ": fetching " + name);
+                        UnpackPack(Download(url, 200L * 1024 * 1024), code);
+                        Log.Info("Wiki pack " + code + ": in place");
+                        Wiki.WikiUpdate.NewPacks = true;
+                        Wiki.WikiUpdate.PackChanged = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Warn("Wiki packs: " + e.Message);
+                }
+            }) { IsBackground = true, Name = "ValheimHelper wiki packs" };
+            thread.Start();
+        }
+
+        // <code>/… goes to wiki/<code>/, img/… to wiki/img/ and the lines of img/index.part.tsv join wiki/img/index.tsv.
+        private static void UnpackPack(byte[] archive, string code)
+        {
+            string wiki = Path.GetFullPath(Path.Combine(Loader.Dir ?? ".", "wiki"));
+            string root = wiki + Path.DirectorySeparatorChar;
+            string indexPart = null;
+            using (ZipArchive zip = new ZipArchive(new MemoryStream(archive), ZipArchiveMode.Read))
+            {
+                foreach (ZipArchiveEntry entry in zip.Entries)
+                {
+                    string name = entry.FullName.Replace('\\', '/');
+                    if (string.IsNullOrEmpty(entry.Name))
+                    {
+                        continue;
+                    }
+                    if (name.Equals("img/index.part.tsv", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using (StreamReader reader = new StreamReader(entry.Open(), Encoding.UTF8))
+                        {
+                            indexPart = reader.ReadToEnd();
+                        }
+                        continue;
+                    }
+                    if (!name.StartsWith(code + "/", StringComparison.OrdinalIgnoreCase) && !name.StartsWith("img/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    string target = Path.GetFullPath(Path.Combine(wiki, name));
+                    if (!target.StartsWith(root, StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new InvalidDataException("bad path in the wiki pack: " + entry.FullName);
+                    }
+                    Directory.CreateDirectory(Path.GetDirectoryName(target));
+                    using (Stream source = entry.Open())
+                    using (FileStream output = File.Create(target))
+                    {
+                        source.CopyTo(output);
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(indexPart))
+            {
+                string indexPath = Path.Combine(wiki, "img", "index.tsv");
+                System.Collections.Generic.HashSet<string> known = new System.Collections.Generic.HashSet<string>();
+                if (File.Exists(indexPath))
+                {
+                    foreach (string line in File.ReadAllLines(indexPath, Encoding.UTF8))
+                    {
+                        int tab = line.IndexOf('\t');
+                        if (tab > 0)
+                        {
+                            known.Add(line.Substring(0, tab));
+                        }
+                    }
+                }
+                StringBuilder added = new StringBuilder();
+                foreach (string line in indexPart.Split('\n'))
+                {
+                    int tab = line.IndexOf('\t');
+                    if (tab > 0 && !known.Contains(line.Substring(0, tab)))
+                    {
+                        added.Append(line.TrimEnd('\r')).Append('\n');
+                    }
+                }
+                File.AppendAllText(indexPath, added.ToString(), new UTF8Encoding(false));
             }
         }
 
