@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ValheimHelper</AssemblyName>
     <!-- The mod's version: the updater compares it with the latest GitHub release (tag v<Version>). -->
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <RootNamespace>ValheimHelper</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>

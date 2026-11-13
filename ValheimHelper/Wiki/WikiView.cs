@@ -88,6 +88,7 @@ namespace ValheimHelper.Wiki
         private bool m_showHits;
         private int m_hitIndex;
         private bool m_langOpen;
+        private bool m_sourceOpen;
         private Rect m_lastArea = new Rect(0f, 0f, 600f, 400f);
         private GUIStyle m_rowButton;
         // Switching the language on an article: that article in the new language once its pack is read.
@@ -608,7 +609,7 @@ namespace ValheimHelper.Wiki
             article.Blocks.Add(new WikiBlock
             {
                 Kind = BlockKind.Paragraph,
-                Text = Lang.T("Кнопка вгорі праворуч перемикає мову статей — окремо від мови меню. Зараз є: ") + string.Join(", ", names.ToArray()) +
+                Text = Lang.T("Кнопки вгорі праворуч: «Вікі» вибирає вікі (Fandom або Weird Gloop), «Статті» — мову статей у ній, окремо від мови меню. Зараз є: ") + string.Join(", ", names.ToArray()) +
                     (m_pageCounts.TryGetValue("uk", out int ukCount)
                         ? Lang.F(". Українських статей поки {0}: решта з'являться, щойно їх перекладуть і вичитають.", ukCount)
                         : Lang.T(". Українські статті з'являться тут, щойно їх перекладуть і вичитають.")),
@@ -806,7 +807,10 @@ namespace ValheimHelper.Wiki
             Rect forward = new Rect(back.xMax + 4f, area.y, 84f, BarHeight);
             Rect home = new Rect(forward.xMax + 4f, area.y, 90f, BarHeight);
             Rect language = new Rect(area.xMax - 180f, area.y, 180f, BarHeight);
-            Rect search = new Rect(home.xMax + 8f, area.y, Mathf.Max(80f, language.x - 8f - home.xMax - 8f), BarHeight);
+            // the wiki first, then its languages
+            bool twoWikis = HasSource(false) && HasSource(true);
+            Rect source = twoWikis ? new Rect(language.x - 4f - 170f, area.y, 170f, BarHeight) : new Rect(language.x, area.y, 0f, BarHeight);
+            Rect search = new Rect(home.xMax + 8f, area.y, Mathf.Max(80f, source.x - 8f - home.xMax - 8f), BarHeight);
             Rect view = new Rect(area.x, area.y + BarHeight + 6f, area.width, Mathf.Max(40f, area.height - BarHeight - 6f));
 
             string searchKey = m_search + (m_pack != null && m_pack.Ready ? "+" : "-");
@@ -818,8 +822,10 @@ namespace ValheimHelper.Wiki
             }
             bool hitsShown = m_showHits && m_search.Length > 0;
             Rect hitsRect = new Rect(search.x, search.yMax + 2f, Mathf.Max(search.width, 320f), Mathf.Max(1, m_hits.Count) * HitHeight + 6f);
-            Rect languageRect = new Rect(language.xMax - 220f, language.yMax + 2f, 220f, (m_languages.Count + 1) * HitHeight + 6f);
-            bool overPopup = (hitsShown && hitsRect.Contains(current.mousePosition)) || (m_langOpen && languageRect.Contains(current.mousePosition));
+            Rect languageRect = new Rect(language.xMax - 220f, language.yMax + 2f, 220f, (SourceLanguages().Count + 1) * HitHeight + 6f);
+            Rect sourceRect = new Rect(source.x, source.yMax + 2f, Mathf.Max(source.width, 170f), 2 * HitHeight + 6f);
+            bool overPopup = (hitsShown && hitsRect.Contains(current.mousePosition)) || (m_langOpen && languageRect.Contains(current.mousePosition))
+                || (m_sourceOpen && sourceRect.Contains(current.mousePosition));
 
             // a click elsewhere closes the popups
             if (current.type == EventType.MouseDown && !overPopup)
@@ -831,6 +837,10 @@ namespace ValheimHelper.Wiki
                 if (!language.Contains(current.mousePosition))
                 {
                     m_langOpen = false;
+                }
+                if (!source.Contains(current.mousePosition))
+                {
+                    m_sourceOpen = false;
                 }
             }
             if (current.type == EventType.MouseDown && (current.button == 3 || current.button == 4) && area.Contains(current.mousePosition))
@@ -857,10 +867,17 @@ namespace ValheimHelper.Wiki
                 GoTo(Home, null, 0f, push: true);
             }
             DrawSearch(search, hitsShown);
-            string languageName = m_pack != null ? PackName(m_pack.Language, brief: true) : "—";
+            if (twoWikis && GUI.Button(source, Lang.T("Вікі: ") + (OnWeirdGloop ? "Weird Gloop" : "Fandom") + " ▾"))
+            {
+                m_sourceOpen = !m_sourceOpen;
+                m_langOpen = false;
+                m_showHits = false;
+            }
+            string languageName = m_pack != null ? WikiPack.LanguageName(m_pack.Language) : "—";
             if (GUI.Button(language, Lang.T("Статті: ") + languageName + " ▾"))
             {
                 m_langOpen = !m_langOpen;
+                m_sourceOpen = false;
                 m_showHits = false;
             }
             if (hitsShown)
@@ -870,6 +887,10 @@ namespace ValheimHelper.Wiki
             if (m_langOpen)
             {
                 DrawLanguages(languageRect);
+            }
+            if (m_sourceOpen)
+            {
+                DrawSources(sourceRect);
             }
         }
 
@@ -950,10 +971,10 @@ namespace ValheimHelper.Wiki
             GUI.DrawTexture(rect, HelperSkin.White);
             GUI.color = Color.white;
             float y = rect.y + 3f;
-            foreach (string code in m_languages)
+            foreach (string code in SourceLanguages())
             {
                 bool current = m_pack != null && m_pack.Language == code;
-                if (GUI.Button(new Rect(rect.x + 3f, y, rect.width - 6f, HitHeight - 2f), (current ? "● " : "   ") + PackName(code, brief: false), m_rowButton))
+                if (GUI.Button(new Rect(rect.x + 3f, y, rect.width - 6f, HitHeight - 2f), (current ? "● " : "   ") + WikiPack.LanguageName(code), m_rowButton))
                 {
                     m_langOpen = false;
                     if (!current)
@@ -967,6 +988,64 @@ namespace ValheimHelper.Wiki
             {
                 m_langOpen = false;
                 GoTo(Donate, null, 0f, push: true);
+            }
+        }
+
+        // ---------------------------------------------------------------- wikis
+
+        private bool OnWeirdGloop => m_pack != null && WikiSources.IsWeirdGloop(m_pack.Language);
+
+        // The packs of the wiki that is open: its languages.
+        private List<string> SourceLanguages()
+        {
+            bool weirdGloop = OnWeirdGloop;
+            return m_languages.FindAll(code => WikiSources.IsWeirdGloop(code) == weirdGloop);
+        }
+
+        private bool HasSource(bool weirdGloop)
+        {
+            return m_languages.Exists(code => WikiSources.IsWeirdGloop(code) == weirdGloop);
+        }
+
+        // Another wiki: the same language there if it has one, else its English, else whatever it has; the article stays.
+        private void SwitchSource(bool weirdGloop)
+        {
+            string language = m_pack != null ? WikiSources.Language(m_pack.Language) : "en";
+            string prefix = weirdGloop ? WikiSources.WeirdGloopPrefix : "";
+            string code = prefix + language;
+            if (!m_languages.Contains(code))
+            {
+                code = m_languages.Contains(prefix + "en") ? prefix + "en" : m_languages.Find(c => WikiSources.IsWeirdGloop(c) == weirdGloop);
+            }
+            if (code != null)
+            {
+                SwitchLanguage(code);
+            }
+        }
+
+        private void DrawSources(Rect rect)
+        {
+            GUI.color = new Color(0.07f, 0.06f, 0.05f, 0.98f);
+            GUI.DrawTexture(rect, HelperSkin.White);
+            GUI.color = Color.white;
+            float y = rect.y + 3f;
+            foreach (bool weirdGloop in new[] { false, true })
+            {
+                if (!HasSource(weirdGloop))
+                {
+                    continue;
+                }
+                bool current = OnWeirdGloop == weirdGloop;
+                string name = weirdGloop ? "Weird Gloop" : "Fandom";
+                if (GUI.Button(new Rect(rect.x + 3f, y, rect.width - 6f, HitHeight - 2f), (current ? "● " : "   ") + name, m_rowButton))
+                {
+                    m_sourceOpen = false;
+                    if (!current)
+                    {
+                        SwitchSource(weirdGloop);
+                    }
+                }
+                y += HitHeight;
             }
         }
 

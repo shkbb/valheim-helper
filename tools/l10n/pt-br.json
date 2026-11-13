@@ -1402,5 +1402,7 @@
 "1401": "O Valheim Helper foi atualizado para a versão {0}.",
 "1402": "<color=#c0c0c0>Novas versões estão na página do mod no Nexus Mods (e nos gerenciadores de mods).</color>",
 "1403": "<color=#c0c0c0>A nova versão é instalada automaticamente ao iniciar o jogo. O guia é atualizado separadamente, direto da wiki.</color>",
-"1404": "Textos e imagens: autores da wiki {0}, licença {1}"
+"1404": "Textos e imagens: autores da wiki {0}, licença {1}",
+"1405": "Os botões no canto superior direito: \"Wiki\" seleciona a wiki (Fandom ou Weird Gloop), \"Artigos\" seleciona o idioma dos seus artigos, separadamente do idioma do menu. Disponíveis agora: ",
+"1406": "Wiki: "
 }

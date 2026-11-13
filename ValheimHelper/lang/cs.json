@@ -1403,5 +1403,7 @@
 "Valheim Helper оновлено до версії {0}.": "Valheim Helper byl aktualizován na verzi {0}.",
 "<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>": "<color=#c0c0c0>Nové verze jsou na stránce modu na Nexus Mods (a ve správcích modů).</color>",
 "<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>": "<color=#c0c0c0>Nová verze se instaluje sama při spuštění hry. Průvodce se aktualizuje zvlášť, přímo z wiki.</color>",
-"Тексти й зображення — автори вікі {0}, ліцензія {1}": "Texty a obrázky: autoři wiki {0}, licence {1}"
+"Тексти й зображення — автори вікі {0}, ліцензія {1}": "Texty a obrázky: autoři wiki {0}, licence {1}",
+"Кнопки вгорі праворуч: «Вікі» вибирає вікі (Fandom або Weird Gloop), «Статті» — мову статей у ній, окремо від мови меню. Зараз є: ": "Tlačítka vpravo nahoře: „Wiki“ vybírá wiki (Fandom nebo Weird Gloop), „Články“ jazyk jejích článků, nezávisle na jazyku menu. Nyní k dispozici: ",
+"Вікі: ": "Wiki: "
 }
