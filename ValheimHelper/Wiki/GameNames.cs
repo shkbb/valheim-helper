@@ -27,6 +27,33 @@ namespace ValheimHelper.Wiki
         private static volatile List<Name> s_names = new List<Name>();
         private static bool s_started;
 
+        private static Dictionary<string, string> s_byEnglish;
+        private static List<Name> s_indexed;
+
+        // The name in the game's language of the thing the English name stands for, or null (English game, unknown).
+        internal static string LocalName(string english)
+        {
+            List<Name> names = Pairs;
+            if (names.Count == 0 || string.IsNullOrEmpty(english))
+            {
+                return null;
+            }
+            if (!ReferenceEquals(names, s_indexed))
+            {
+                Dictionary<string, string> index = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                foreach (Name name in names)
+                {
+                    if (!string.IsNullOrEmpty(name.English) && !index.ContainsKey(name.English))
+                    {
+                        index[name.English] = name.Local;
+                    }
+                }
+                s_byEnglish = index;
+                s_indexed = names;
+            }
+            return s_byEnglish.TryGetValue(english, out string local) && !string.Equals(local, english, StringComparison.OrdinalIgnoreCase) ? local : null;
+        }
+
         internal static List<Name> Pairs
         {
             get

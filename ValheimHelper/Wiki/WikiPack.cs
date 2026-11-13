@@ -64,6 +64,7 @@ namespace ValheimHelper.Wiki
 
         internal static string LanguageName(string code)
         {
+            code = WikiSources.Language(code);
             switch (code)
             {
                 case "en": return "English";

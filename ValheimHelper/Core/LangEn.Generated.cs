@@ -1411,6 +1411,7 @@ namespace ValheimHelper
             table["Valheim Helper оновлено до версії {0}."] = "Valheim Helper has been updated to version {0}.";
             table["<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>"] = "<color=#c0c0c0>New versions are on the mod's Nexus Mods page (and in mod managers).</color>";
             table["<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>"] = "<color=#c0c0c0>A new version installs itself when the game starts. The guide updates separately, straight from the wiki.</color>";
+            table["Тексти й зображення — автори вікі {0}, ліцензія {1}"] = "Text and pictures: the authors of the {0} wiki, license {1}";
         }
     }
 }

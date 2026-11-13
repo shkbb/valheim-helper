@@ -1402,5 +1402,6 @@
 "1400": "Version {0} wurde beim Spielstart installiert.",
 "1401": "Valheim Helper wurde auf Version {0} aktualisiert.",
 "1402": "<color=#c0c0c0>Neue Versionen gibt es auf der Nexus-Mods-Seite der Mod (und in Mod-Managern).</color>",
-"1403": "<color=#c0c0c0>Eine neue Version installiert sich beim Spielstart von selbst. Der Guide aktualisiert sich separat, direkt aus dem Wiki.</color>"
+"1403": "<color=#c0c0c0>Eine neue Version installiert sich beim Spielstart von selbst. Der Guide aktualisiert sich separat, direkt aus dem Wiki.</color>",
+"1404": "Texte und Bilder: die Autoren des {0}-Wikis, Lizenz {1}"
 }

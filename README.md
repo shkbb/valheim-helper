@@ -38,10 +38,11 @@ ignore cheat settings left by the Full edition and do not accept items sent by a
 
 ## Languages
 
-- **Menu**: English, Ukrainian, German, French, Spanish. Polish, Portuguese (Brazil), Chinese (Simplified) and Czech
-  are being translated. "As the game's language" picks the language Valheim runs in; a missing text is shown in English.
-- **Wiki guide**: Ukrainian, English, German, French, Polish, Portuguese (Brazil), Czech, Chinese, from the Valheim Fandom
-  wikis in those languages.
+- **Menu**: English, Ukrainian, German, French, Spanish, Polish, Portuguese (Brazil), Chinese (Simplified), Czech.
+  "As the game's language" picks the language Valheim runs in; a missing text is shown in English.
+- **Wiki guide**: two wikis. The Valheim wiki on Fandom in Ukrainian, English, German, French, Polish, Portuguese (Brazil),
+  Czech and Chinese, and the Valheim Wiki on Weird Gloop (English for now; a language Weird Gloop opens later appears in
+  the guide by itself). Weird Gloop's item pages are shown as a card with the name in your game's language.
 
 ## Installation
 1. Go to [Releases](../../releases) and download **one** archive, the edition you want:

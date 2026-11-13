@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Builds a whole guide pack from a MediaWiki wiki with the mod's own converter (WikiConvert), the same one the guide
+       uses for its live updates (dotnet run, arguments: wg-en and the modpack folder). Used for Weird Gloop; Fandom packs come from
+       wiki-localizer. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\ValheimHelper\Wiki\Html.cs" Link="Html.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\WikiConvert.cs" Link="WikiConvert.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\WikiSources.cs" Link="WikiSources.cs" />
+  </ItemGroup>
+
+</Project>

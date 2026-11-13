@@ -276,6 +276,10 @@ namespace ValheimHelper.Wiki
 
         private float Infobox(WikiBlock block, int index, float y)
         {
+            if (!string.IsNullOrEmpty(block.GameId))
+            {
+                return Card(block, y);
+            }
             bool wide = Width >= WideLayout;
             float width = wide ? Mathf.Clamp(Width * 0.36f, 270f, 340f) : Mathf.Min(Width, 440f);
             if (m_hasFloat)
@@ -340,6 +344,120 @@ namespace ValheimHelper.Wiki
                 return y;
             }
             return cy + 14f;
+        }
+
+        // Weird Gloop's infobox as the guide's own card: across the page, the picture on the left, the wiki's title with
+        // the name in the game's language under it, then every row as a tile (label above, value below).
+        private float Card(WikiBlock block, float y)
+        {
+            if (m_hasFloat)
+            {
+                y = ClearFloat(y);
+            }
+            float x = 0f;
+            float width = Width;
+            List<InfoItem> items = new List<InfoItem>(block.Before);
+            foreach (InfoTab tab in block.Tabs)
+            {
+                items.AddRange(tab.Items);
+            }
+            items.AddRange(block.After);
+            int background = AddFill(new Rect(x, y, width, 0f), new Color(0.09f, 0.075f, 0.06f, 0.96f));
+            float left = x + 12f;
+            float right = x + width - 12f;
+            float top = y + 12f;
+            float textLeft = left;
+            float pictureBottom = top;
+            InfoItem picture = items.Find(item => item.Kind == 'I');
+            if (picture != null)
+            {
+                Vector2 size = Fit(picture.Image, 96f, 96f);
+                AddFill(new Rect(left - 2f, top - 2f, size.x + 4f, size.y + 4f), new Color(WikiStyles.Accent.r, WikiStyles.Accent.g, WikiStyles.Accent.b, 0.35f));
+                AddFill(new Rect(left, top, size.x, size.y), new Color(0.16f, 0.13f, 0.1f, 1f));
+                AddImage(new Rect(left, top, size.x, size.y), picture.Image.Key);
+                textLeft = left + size.x + 16f;
+                pictureBottom = top + size.y;
+            }
+            float cy = top;
+            if (!string.IsNullOrEmpty(block.Text))
+            {
+                cy = Flow(Tokens(block.Text, true, false), cy, WikiStyles.H3, WikiStyles.Accent, false, textLeft, right, false);
+                string local = GameNames.LocalName(Plain(block.Text));
+                if (local != null)
+                {
+                    cy = Flow(Tokens(local, false, false), cy + 2f, WikiStyles.Body, WikiStyles.Bright, false, textLeft, right, false);
+                }
+            }
+            if (picture != null && !string.IsNullOrEmpty(picture.Image.Caption))
+            {
+                cy = Flow(Tokens(picture.Image.Caption, false, true), cy + 4f, WikiStyles.Small, WikiStyles.Dim, false, textLeft, right, false);
+            }
+            cy = Mathf.Max(cy, pictureBottom) + 12f;
+
+            int columns = width >= 640f ? 3 : 2;
+            const float gap = 8f;
+            float tileWidth = (right - left - gap * (columns - 1)) / columns;
+            Color tileColor = new Color(0.16f, 0.12f, 0.08f, 1f);
+            List<int> row = new List<int>();
+            int column = 0;
+            float rowTop = cy;
+            float rowBottom = cy;
+            foreach (InfoItem item in items)
+            {
+                if (item.Kind == 'I')
+                {
+                    continue;
+                }
+                if (item.Kind == 'H')
+                {
+                    cy = EndRow(row, rowTop, rowBottom, cy, gap);
+                    column = 0;
+                    cy = Flow(Tokens(item.Text, true, false), cy + 2f, WikiStyles.Small, WikiStyles.Accent, false, left, right, false) + 4f;
+                    rowTop = cy;
+                    rowBottom = cy;
+                    continue;
+                }
+                float tx = left + column * (tileWidth + gap);
+                row.Add(AddFill(new Rect(tx, rowTop, tileWidth, 0f), tileColor));
+                float bottom = rowTop + 5f;
+                if (item.Label.Length > 0)
+                {
+                    bottom = Flow(Tokens(item.Label, false, false), bottom, WikiStyles.Small, WikiStyles.Dim, false, tx + 8f, tx + tileWidth - 8f, false);
+                }
+                bottom = Flow(Tokens(item.Text, true, false), bottom + 1f, WikiStyles.Small, WikiStyles.Text, false, tx + 8f, tx + tileWidth - 8f, false) + 6f;
+                rowBottom = Mathf.Max(rowBottom, bottom);
+                column++;
+                if (column == columns)
+                {
+                    cy = EndRow(row, rowTop, rowBottom, cy, gap);
+                    column = 0;
+                    rowTop = cy;
+                    rowBottom = cy;
+                }
+            }
+            cy = EndRow(row, rowTop, rowBottom, cy, gap) + 4f;
+            SetHeight(background, cy - y);
+            Color frame = new Color(WikiStyles.Accent.r, WikiStyles.Accent.g, WikiStyles.Accent.b, 0.35f);
+            AddFill(new Rect(x, y, width, 1f), frame);
+            AddFill(new Rect(x, cy - 1f, width, 1f), frame);
+            AddFill(new Rect(x, y, 1f, cy - y), frame);
+            AddFill(new Rect(x + width - 1f, y, 1f, cy - y), frame);
+            return cy + 14f;
+        }
+
+        // Gives the tiles of a row one height; returns where the next row starts.
+        private float EndRow(List<int> row, float rowTop, float rowBottom, float cy, float gap)
+        {
+            if (row.Count == 0)
+            {
+                return cy;
+            }
+            foreach (int index in row)
+            {
+                SetHeight(index, rowBottom - rowTop);
+            }
+            row.Clear();
+            return rowBottom + gap;
         }
 
         private float InfoItems(List<InfoItem> items, float x, float width, float cy)

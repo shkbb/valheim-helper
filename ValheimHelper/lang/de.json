@@ -1402,5 +1402,6 @@
 "Версію {0} встановлено під час запуску гри.": "Version {0} wurde beim Spielstart installiert.",
 "Valheim Helper оновлено до версії {0}.": "Valheim Helper wurde auf Version {0} aktualisiert.",
 "<color=#c0c0c0>Нові версії — на сторінці мода в Nexus Mods (і в менеджерах модів).</color>": "<color=#c0c0c0>Neue Versionen gibt es auf der Nexus-Mods-Seite der Mod (und in Mod-Managern).</color>",
-"<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>": "<color=#c0c0c0>Eine neue Version installiert sich beim Spielstart von selbst. Der Guide aktualisiert sich separat, direkt aus dem Wiki.</color>"
+"<color=#c0c0c0>Нова версія встановлюється сама під час запуску гри. Довідник оновлюється окремо, просто з вікі.</color>": "<color=#c0c0c0>Eine neue Version installiert sich beim Spielstart von selbst. Der Guide aktualisiert sich separat, direkt aus dem Wiki.</color>",
+"Тексти й зображення — автори вікі {0}, ліцензія {1}": "Texte und Bilder: die Autoren des {0}-Wikis, Lizenz {1}"
 }

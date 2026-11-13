@@ -18,6 +18,7 @@
     <Compile Include="..\..\ValheimHelper\Wiki\WikiModel.cs" Link="WikiModel.cs" />
     <Compile Include="..\..\ValheimHelper\Wiki\Html.cs" Link="Html.cs" />
     <Compile Include="..\..\ValheimHelper\Wiki\WikiConvert.cs" Link="WikiConvert.cs" />
+    <Compile Include="..\..\ValheimHelper\Wiki\WikiSources.cs" Link="WikiSources.cs" />
     <Compile Include="..\..\ValheimHelper\Core\Lang.cs" Link="Lang.cs" />
     <Compile Include="..\..\ValheimHelper\Core\LangEn.cs" Link="LangEn.cs" />
     <Compile Include="..\..\ValheimHelper\Core\LangEn.Generated.cs" Link="LangEn.Generated.cs" />

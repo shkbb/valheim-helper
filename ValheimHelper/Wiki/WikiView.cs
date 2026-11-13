@@ -155,6 +155,27 @@ namespace ValheimHelper.Wiki
 
         private readonly Dictionary<string, int> m_pageCounts = new Dictionary<string, int>();
 
+        private void AddNewPacks()
+        {
+            try
+            {
+                foreach (string dir in Directory.GetDirectories(WikiDir))
+                {
+                    string code = Path.GetFileName(dir);
+                    if (code != "img" && !m_languages.Contains(code) && File.Exists(Path.Combine(dir, "pages.txt")))
+                    {
+                        m_languages.Add(code);
+                        m_pageCounts[code] = PageCount(dir);
+                    }
+                }
+                m_languages.Sort((a, b) => Order(a) != Order(b) ? Order(a).CompareTo(Order(b)) : string.CompareOrdinal(a, b));
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
+        }
+
         // "pages N" of a pack's meta.txt, without loading the pack.
         private static int PageCount(string dir)
         {
@@ -175,9 +196,25 @@ namespace ValheimHelper.Wiki
             return 0;
         }
 
+        // Fandom first (English, Ukrainian, the rest), then Weird Gloop (English, the rest)
         private static int Order(string code)
         {
+            if (WikiSources.IsWeirdGloop(code))
+            {
+                return WikiSources.Language(code) == "en" ? 3 : 4;
+            }
             return code == "en" ? 0 : code == "uk" ? 1 : 2;
+        }
+
+        // A pack as the guide names it: the language, and the wiki when it is not Fandom.
+        internal static string PackName(string code, bool brief)
+        {
+            string name = WikiPack.LanguageName(code);
+            if (!WikiSources.IsWeirdGloop(code))
+            {
+                return name;
+            }
+            return brief ? "WG · " + name : name + " · Weird Gloop";
         }
 
         private void SetLanguage(string code, bool keepPage)
@@ -240,6 +277,15 @@ namespace ValheimHelper.Wiki
             m_switchFrom = null;
             string anchor = null;
             string target = from.LinkTo(title, m_pack.Language) ?? m_pack.LinkedFrom(from.Language, title);
+            if (target == null && WikiSources.IsWeirdGloop(from.Language) != WikiSources.IsWeirdGloop(m_pack.Language))
+            {
+                // from one wiki to the other: through the English title, which both wikis share
+                string english = WikiSources.Language(from.Language) == "en" ? title : from.LinkTo(title, "en");
+                if (english != null)
+                {
+                    target = WikiSources.Language(m_pack.Language) == "en" ? english : m_pack.LinkedFrom("en", english);
+                }
+            }
             string found = target != null ? m_pack.Resolve(target, out anchor) : null;
             if (found == null)
             {
@@ -254,7 +300,7 @@ namespace ValheimHelper.Wiki
                 GoTo(found, anchor, 0f, push: true);
                 return;
             }
-            string format = s_notFound.TryGetValue(m_pack.Language, out string text) ? text : s_notFound["en"];
+            string format = s_notFound.TryGetValue(WikiSources.Language(m_pack.Language), out string text) ? text : s_notFound["en"];
             m_notice = string.Format(format, title);
             m_articleKey = null;
         }
@@ -267,6 +313,12 @@ namespace ValheimHelper.Wiki
                 return;
             }
             StartUpdates(byHand: false);
+            if (WikiUpdate.NewPacks)
+            {
+                // a wiki opened a new language: it joins the list (and fills itself with the updates)
+                WikiUpdate.NewPacks = false;
+                AddNewPacks();
+            }
             if (WikiUpdate.PackChanged && !WikiUpdate.Running)
             {
                 WikiUpdate.PackChanged = false;
@@ -294,9 +346,11 @@ namespace ValheimHelper.Wiki
                 return;
             }
             WikiUpdate.Start(m_pack.Language, m_pack.Dir, byHand);
-            if (m_pack.Language != "en" && m_languages.Contains("en"))
+            // English of the same wiki
+            string english = WikiSources.IsWeirdGloop(m_pack.Language) ? WikiSources.WeirdGloopPrefix + "en" : "en";
+            if (m_pack.Language != english && m_languages.Contains(english))
             {
-                WikiUpdate.Start("en", Path.Combine(WikiDir, "en"), byHand);
+                WikiUpdate.Start(english, Path.Combine(WikiDir, english), byHand);
             }
         }
 
@@ -549,7 +603,7 @@ namespace ValheimHelper.Wiki
             List<string> names = new List<string>();
             foreach (string code in m_languages)
             {
-                names.Add(WikiPack.LanguageName(code));
+                names.Add(PackName(code, brief: false));
             }
             article.Blocks.Add(new WikiBlock
             {
@@ -571,7 +625,7 @@ namespace ValheimHelper.Wiki
                 List<string> parts = new List<string>();
                 foreach (KeyValuePair<string, string> line in lines)
                 {
-                    parts.Add(WikiPack.LanguageName(line.Key) + " — " + line.Value);
+                    parts.Add(PackName(line.Key, brief: false) + " — " + line.Value);
                 }
                 status = string.Join("   ·   ", parts.ToArray());
             }
@@ -706,7 +760,16 @@ namespace ValheimHelper.Wiki
             string source = m_pack.MetaValue("source");
             if (source.Length > 0)
             {
-                text.Append(Lang.T("Стаття з ")).Append(Link(source + article.Title.Replace(' ', '_'), "valheim.fandom.com")).Append(Lang.T(" (відкриється в браузері). "));
+                string host = source;
+                try
+                {
+                    host = new Uri(source).Host;
+                }
+                catch (UriFormatException)
+                {
+                    // the address as it is
+                }
+                text.Append(Lang.T("Стаття з ")).Append(Link(source + article.Title.Replace(' ', '_'), host)).Append(Lang.T(" (відкриється в браузері). "));
             }
             text.Append(Attribution());
             return text.ToString();
@@ -716,7 +779,8 @@ namespace ValheimHelper.Wiki
         {
             string license = m_pack != null ? m_pack.MetaValue("license") : "";
             string date = m_pack != null ? m_pack.MetaValue("date") : "";
-            return Lang.F("Тексти й зображення — автори вікі Valheim, ліцензія {0}", (license.Length > 0 ? license : "CC BY-SA")) + (date.Length > 0 ? Lang.F("; знімок від {0}.", date) : ".");
+            string site = m_pack != null && WikiSources.IsWeirdGloop(m_pack.Language) ? "Valheim Wiki (Weird Gloop)" : "Valheim";
+            return Lang.F("Тексти й зображення — автори вікі {0}, ліцензія {1}", site, (license.Length > 0 ? license : "CC BY-SA")) + (date.Length > 0 ? Lang.F("; знімок від {0}.", date) : ".");
         }
 
         // ---------------------------------------------------------------- drawing
@@ -793,7 +857,7 @@ namespace ValheimHelper.Wiki
                 GoTo(Home, null, 0f, push: true);
             }
             DrawSearch(search, hitsShown);
-            string languageName = m_pack != null ? m_pack.Name : "—";
+            string languageName = m_pack != null ? PackName(m_pack.Language, brief: true) : "—";
             if (GUI.Button(language, Lang.T("Статті: ") + languageName + " ▾"))
             {
                 m_langOpen = !m_langOpen;
@@ -889,7 +953,7 @@ namespace ValheimHelper.Wiki
             foreach (string code in m_languages)
             {
                 bool current = m_pack != null && m_pack.Language == code;
-                if (GUI.Button(new Rect(rect.x + 3f, y, rect.width - 6f, HitHeight - 2f), (current ? "● " : "   ") + WikiPack.LanguageName(code), m_rowButton))
+                if (GUI.Button(new Rect(rect.x + 3f, y, rect.width - 6f, HitHeight - 2f), (current ? "● " : "   ") + PackName(code, brief: false), m_rowButton))
                 {
                     m_langOpen = false;
                     if (!current)

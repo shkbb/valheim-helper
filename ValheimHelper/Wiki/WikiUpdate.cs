@@ -17,9 +17,11 @@ namespace ValheimHelper.Wiki
     // the next time it opens a page.
     internal static class WikiUpdate
     {
-        private const string UserAgent = "ValheimHelper/1.0 (in-game Valheim wiki reader; contact through the Valheim Fandom wiki)";
+        private const string UserAgent = "ValheimHelper/1.1 (in-game Valheim wiki reader; github.com/shkbb/valheim-helper)";
         private const int RequestPauseMs = 1000;
         private const int MaxPagesPerRun = 30;
+        // A pack that was just opened (a new language on Weird Gloop) fills faster, still one request a second.
+        private const int MaxPagesForNewPack = 300;
         private const int MaxPicturesPerRun = 60;
         private const int TimeoutMs = 20000;
 
@@ -28,6 +30,9 @@ namespace ValheimHelper.Wiki
         internal static bool Running { get; private set; }
         // Set when new articles are on disk: the guide reloads its pack.
         internal static bool PackChanged;
+        // Set when a new language of a wiki got its own (empty) pack: the guide looks at its packs again.
+        internal static volatile bool NewPacks;
+        private static bool s_discovered;
 
         // When each wiki was last asked: a new article published while the game is open is picked up on the next
         // look into the guide, not only after a restart.
@@ -152,7 +157,12 @@ namespace ValheimHelper.Wiki
 
         private static void Work(string language, string dir)
         {
-            string api = language == "en" ? "https://valheim.fandom.com/api.php" : "https://valheim.fandom.com/" + language + "/api.php";
+            string api = WikiSources.Api(language);
+            if (WikiSources.IsWeirdGloop(language) && !s_discovered)
+            {
+                s_discovered = true;
+                Discover(Path.GetDirectoryName(dir));
+            }
             Dictionary<string, long> known = ReadRevisions(dir);
             Dictionary<string, long> live = ListRevisions(api);
             if (live.Count == 0)
@@ -174,7 +184,7 @@ namespace ValheimHelper.Wiki
                 return;
             }
             wanted.Sort(StringComparer.Ordinal);
-            int take = Math.Min(wanted.Count, MaxPagesPerRun);
+            int take = Math.Min(wanted.Count, known.Count == 0 ? MaxPagesForNewPack : MaxPagesPerRun);
             Say(language, Lang.F("Беру з вікі нові статті: {0}…", take));
             Dictionary<string, string> updates = ReadUpdates(dir);
             Dictionary<string, WikiConvert.Picture> pictures = new Dictionary<string, WikiConvert.Picture>();
@@ -209,6 +219,50 @@ namespace ValheimHelper.Wiki
                 ? Lang.F("Довідник оновлено: статей {0}, картинок {1}. Ще {2} — наступного разу.", done, images, left)
                 : Lang.F("Довідник оновлено: статей {0}, картинок {1}.", done, images));
             Log.Info($"Wiki update ({language}): {done} articles, {images} pictures, {left} left");
+        }
+
+        // Weird Gloop's languages come from its interwiki map. A language the guide has no pack for gets an empty one,
+        // which the updates then fill. Russian is never taken.
+        private static void Discover(string wikiDir)
+        {
+            JObject json = Json(WikiSources.Api(WikiSources.WeirdGloopPrefix + "en")
+                + "?action=query&meta=siteinfo&siprop=interwikimap&sifilteriw=local&format=json&formatversion=2");
+            JToken map = json?["query"]?["interwikimap"];
+            if (map == null)
+            {
+                return;
+            }
+            foreach (JToken entry in map)
+            {
+                string prefix = (string)entry["prefix"];
+                string url = (string)entry["url"] ?? "";
+                if (entry["language"] == null || prefix == null || prefix == "en" || !WikiSources.Allowed(prefix)
+                    || url.IndexOf(WikiSources.WeirdGloopHost, StringComparison.OrdinalIgnoreCase) < 0
+                    || prefix.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                {
+                    continue;
+                }
+                string code = WikiSources.WeirdGloopPrefix + prefix.ToLowerInvariant();
+                string packDir = Path.Combine(wikiDir, code);
+                if (Directory.Exists(packDir))
+                {
+                    continue;
+                }
+                try
+                {
+                    Directory.CreateDirectory(packDir);
+                    File.WriteAllText(Path.Combine(packDir, "pages.txt"), "", new UTF8Encoding(false));
+                    File.WriteAllText(Path.Combine(packDir, "meta.txt"),
+                        "format 1\nlang " + prefix + "\nsite Weird Gloop\nsource " + WikiSources.Site(code) + "/w/\nlicense CC BY-NC-SA 3.0\npages 0\n",
+                        new UTF8Encoding(false));
+                    NewPacks = true;
+                    Log.Info("Wiki update: new language on Weird Gloop: " + prefix);
+                }
+                catch (Exception e)
+                {
+                    Log.Warn("Wiki update: " + e.Message);
+                }
+            }
         }
 
         // ---------------------------------------------------------------- the wiki's API

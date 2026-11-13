@@ -45,12 +45,18 @@ namespace ValheimHelper.Wiki
             internal readonly Result Out = new Result();
             private readonly string m_wikiPath;
             private readonly string m_keyPrefix;
+            private readonly bool m_weirdGloop;
+            private readonly string m_site;
+            // The game's own ID of what the article is about (Weird Gloop's infobox data): the guide's card uses it.
+            internal string GameId;
 
+            // lang: the pack's code ("en", "de", "wg-en"…), which also says which wiki the HTML comes from
             internal Converter(string lang)
             {
-                bool english = string.IsNullOrEmpty(lang) || lang == "en";
-                m_wikiPath = english ? "/wiki/" : "/" + lang + "/wiki/";
-                m_keyPrefix = english ? "" : lang + "~";
+                m_wikiPath = WikiSources.ArticlePath(lang);
+                m_keyPrefix = WikiSources.KeyPrefix(lang);
+                m_weirdGloop = WikiSources.IsWeirdGloop(lang);
+                m_site = WikiSources.Site(lang);
             }
 
             private void Line(string line)
@@ -85,6 +91,11 @@ namespace ValheimHelper.Wiki
                 if (tag == "aside" && element.HasClass("portable-infobox"))
                 {
                     Infobox(element);
+                    return;
+                }
+                if (tag == "div" && element.HasClass("infobox-root"))
+                {
+                    WeirdGloopInfobox(element);
                     return;
                 }
                 if (element.HasClass("wds-tabber") || element.HasClass("tabber"))
@@ -250,7 +261,7 @@ namespace ValheimHelper.Wiki
                     }
                     // the item's own text first, its nested lists after it one level deeper
                     HtmlNode copy = item.Clone();
-                    foreach (HtmlNode nested in copy.ChildrenWhere(node => node.Tag == "ul" || node.Tag == "ol"))
+                    foreach (HtmlNode nested in NestedLists(copy))
                     {
                         nested.Remove();
                     }
@@ -259,11 +270,30 @@ namespace ValheimHelper.Wiki
                     {
                         Line(kind + Math.Min(level, 4) + " " + text);
                     }
-                    foreach (HtmlNode nested in item.ChildrenWhere(node => node.Tag == "ul" || node.Tag == "ol"))
+                    foreach (HtmlNode nested in NestedLists(item))
                     {
                         List(nested, level + 1);
                     }
                 }
+            }
+
+            // Lists inside a list item: right in it, or (Weird Gloop) wrapped in a <div> of columns: "Crafting:" → biomes →
+            // items. Fandom packs are built by wiki-localizer, which keeps such lists in one line, so Fandom stays so here too.
+            private List<HtmlNode> NestedLists(HtmlNode item)
+            {
+                List<HtmlNode> found = new List<HtmlNode>();
+                foreach (HtmlNode child in item.Children)
+                {
+                    if (child.Tag == "ul" || child.Tag == "ol")
+                    {
+                        found.Add(child);
+                    }
+                    else if (child.Tag == "div" && m_weirdGloop)
+                    {
+                        found.AddRange(NestedLists(child));
+                    }
+                }
+                return found;
             }
 
             private void Quote(HtmlNode element)
@@ -377,6 +407,84 @@ namespace ValheimHelper.Wiki
                     }
                 }
                 Line("/IB");
+            }
+
+            // Weird Gloop's infobox: a title, the picture with its caption, rows of label and value, groups with headers.
+            private void WeirdGloopInfobox(HtmlNode root)
+            {
+                HtmlNode title = root.FindFirst(node => node.HasClass("infobox-title"));
+                Line("IB " + (title != null ? Inline(title) : ""));
+                if (!string.IsNullOrEmpty(GameId))
+                {
+                    Line("IG " + Field(GameId));
+                    // one card per article knows the game's ID
+                    GameId = null;
+                }
+                WeirdGloopItems(root, title);
+                Line("/IB");
+            }
+
+            private void WeirdGloopItems(HtmlNode parent, HtmlNode skip)
+            {
+                foreach (HtmlNode child in parent.Children)
+                {
+                    if (ReferenceEquals(child, skip))
+                    {
+                        continue;
+                    }
+                    if (child.HasClass("infobox-image-container") || child.HasClass("infobox-image"))
+                    {
+                        HtmlNode img = child.FindFirst(node => node.Tag == "img");
+                        HtmlNode caption = child.FindFirst(node => node.HasClass("infobox-image-caption"));
+                        string line = img != null ? PictureLine("II ", img, caption != null ? Inline(caption) : "") : null;
+                        if (line != null)
+                        {
+                            Line(line);
+                        }
+                    }
+                    else if (child.HasClass("infobox-header"))
+                    {
+                        string text = Inline(child);
+                        if (text.Length > 0)
+                        {
+                            Line("IH " + text);
+                        }
+                    }
+                    else if (child.HasClass("infobox-row-container"))
+                    {
+                        HtmlNode label = child.FindFirst(node => node.HasClass("infobox-row-label"));
+                        HtmlNode value = child.FindFirst(node => node.HasClass("infobox-row-value"));
+                        string text = value != null ? ListText(value) : "";
+                        if (text.Length > 0)
+                        {
+                            Line("IR " + (label != null ? Field(Inline(label)) : "") + "\t" + text);
+                        }
+                    }
+                    else
+                    {
+                        WeirdGloopItems(child, null);
+                    }
+                }
+            }
+
+            // A value that is a list (materials, drops) keeps one item per line.
+            private string ListText(HtmlNode value)
+            {
+                List<HtmlNode> items = value.FindAll(node => node.Tag == "li");
+                if (items.Count == 0)
+                {
+                    return Inline(value);
+                }
+                List<string> parts = new List<string>();
+                foreach (HtmlNode item in items)
+                {
+                    string text = Inline(item);
+                    if (text.Length > 0)
+                    {
+                        parts.Add(text);
+                    }
+                }
+                return string.Join(Break.ToString(), parts.ToArray());
             }
 
             private void InfoboxItems(HtmlNode parent)
@@ -657,11 +765,18 @@ namespace ValheimHelper.Wiki
             private Picture Register(HtmlNode img, int maxWidth)
             {
                 string key = img.Attr("data-image-key");
+                string url = img.HasAttr("data-src") ? img.Attr("data-src") : img.Attr("src");
+                string file = null;
+                if (m_weirdGloop)
+                {
+                    // no image keys there: the file's name is in the address (/images/X.png, /images/thumb/X.png/30px-X.png)
+                    file = WeirdGloopFile(url);
+                    key = file != null ? Decode(file) : "";
+                }
                 if (key.Length > 0)
                 {
                     key = m_keyPrefix + key;
                 }
-                string url = img.HasAttr("data-src") ? img.Attr("data-src") : img.Attr("src");
                 if (key.Length == 0 || url.Length == 0 || url.StartsWith("data:", StringComparison.Ordinal))
                 {
                     return null;
@@ -669,13 +784,60 @@ namespace ValheimHelper.Wiki
                 int display = ParseInt(img.Attr("width"), maxWidth);
                 // twice the shown size for sharpness on large screens, within the limit
                 int width = Math.Min(maxWidth, Math.Max(display * 2, 32));
+                if (m_weirdGloop)
+                {
+                    // never wider than the file itself
+                    int fileWidth = ParseInt(img.Attr("data-file-width"), 0);
+                    if (fileWidth > 0)
+                    {
+                        width = Math.Min(width, fileWidth);
+                    }
+                }
                 if (Out.Pictures.TryGetValue(key, out Picture existing) && existing.Width >= width)
                 {
                     return existing;
                 }
-                Picture picture = new Picture { Key = key, Url = Sized(url, width), Width = width };
+                string address = m_weirdGloop ? WeirdGloopSized(file, width, ParseInt(img.Attr("data-file-width"), 0)) : Sized(url, width);
+                Picture picture = new Picture { Key = key, Url = address, Width = width };
                 Out.Pictures[key] = picture;
                 return picture;
+            }
+
+            // "/images/thumb/Iron.png/30px-Iron.png?ab12" or "/images/Iron.png?ab12" → "Iron.png" (still URL-encoded)
+            private static string WeirdGloopFile(string url)
+            {
+                int query = url.IndexOf('?');
+                string path = query >= 0 ? url.Substring(0, query) : url;
+                const string thumb = "/images/thumb/";
+                int at = path.IndexOf(thumb, StringComparison.Ordinal);
+                if (at >= 0)
+                {
+                    string rest = path.Substring(at + thumb.Length);
+                    int slash = rest.IndexOf('/');
+                    return slash > 0 ? rest.Substring(0, slash) : null;
+                }
+                at = path.IndexOf("/images/", StringComparison.Ordinal);
+                if (at < 0)
+                {
+                    return null;
+                }
+                string name = path.Substring(at + "/images/".Length);
+                return name.Length > 0 && name.IndexOf('/') < 0 ? name : null;
+            }
+
+            // A copy of the picture at the width (MediaWiki makes thumbnails on request), or the file itself.
+            private string WeirdGloopSized(string file, int width, int fileWidth)
+            {
+                if (fileWidth > 0 && width >= fileWidth)
+                {
+                    return m_site + "/images/" + file;
+                }
+                string name = width + "px-" + file;
+                if (file.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
+                {
+                    name += ".png";
+                }
+                return m_site + "/images/thumb/" + file + "/" + name;
             }
 
             private static int[] DisplaySize(HtmlNode img, int maxWidth)
@@ -711,6 +873,16 @@ namespace ValheimHelper.Wiki
             Converter converter = new Converter(lang);
             HtmlNode root = Html.Parse(html);
             HtmlNode content = root.FindFirst(node => node.Tag == "div" && node.HasClass("mw-parser-output")) ?? root;
+            // Weird Gloop's infobox carries its data as JSON (hidden, dropped below with the navigation): the game's ID
+            HtmlNode data = content.FindFirst(node => node.Tag == "pre" && node.HasClass("infobox-json"));
+            if (data != null)
+            {
+                System.Text.RegularExpressions.Match id = System.Text.RegularExpressions.Regex.Match(data.InnerText(), "\"id\"\\s*:\\s*\"([^\"]+)\"");
+                if (id.Success)
+                {
+                    converter.GameId = id.Groups[1].Value.Trim();
+                }
+            }
             foreach (HtmlNode node in content.FindAll(IsDropped))
             {
                 node.Remove();

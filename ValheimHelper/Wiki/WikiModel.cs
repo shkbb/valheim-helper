@@ -74,6 +74,8 @@ namespace ValheimHelper.Wiki
         public List<InfoItem> Before;
         public List<InfoTab> Tabs;
         public List<InfoItem> After;
+        // Weird Gloop's infobox: the game's own ID of the thing (the guide draws it as a card with the game's name)
+        public string GameId;
         public List<TableCell> Cells;
         public int Rows;
         public int Cols;
@@ -141,6 +143,9 @@ namespace ValheimHelper.Wiki
                         case "/IT":
                             tab = null;
                             afterTabs = true;
+                            continue;
+                        case "IG":
+                            infobox.GameId = rest.Trim();
                             continue;
                         case "/IB":
                             article.Blocks.Add(infobox);
